@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Navbar({ messages, locale }) {
+  const [open, setOpen] = useState(false);
+
   const t = (key, fallback) =>
     key
       .split(".")
@@ -24,34 +26,172 @@ export default function Navbar({ messages, locale }) {
     { href: `${base}/contact`, label: t ? t("nav.contact") : "Contact" },
   ];
   return (
-    <header className="sticky top-0 z-40">
-      <nav className="container mx-auto flex items-center justify-between px-4 py-3 border-b-2 nav">
-        <Link href={base} className="font-extrabold tracking-wide text-xl">
-          Star Electronic
-        </Link>
-        <div className="flex items-center gap-2">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`btn btn-link ${
-                pathname === l.href ? "text-primary" : ""
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
-          <Link href={`${base}/dashboard`} className="btn btn-link">
-            {t ? t("nav.dashboard") : "Dashboard"}
+    <>
+      {/* Mobile navbar */}
+      <header className="lg:hidden z-50">
+        <div className="flex items-center justify-between p-3 border-b nav bg-background">
+          <Link href={base} className="font-extrabold tracking-wide text-lg">
+            Star Electronic
           </Link>
-          <LangSwitcher
-            currentLocale={locale || "en"}
-            pathname={pathname || base}
-          />
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <button
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="p-2 rounded-md focus:outline-none focus:ring"
+              onClick={() => setOpen((o) => !o)}
+            >
+              {/* simple hamburger / close icon */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                {open ? (
+                  <path
+                    d="M6 6L18 18M6 18L18 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                ) : (
+                  <>
+                    <path
+                      d="M3 6h18"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M3 12h18"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M3 18h18"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
-      </nav>
-    </header>
+
+        {/* Mobile menu panel */}
+        {open && (
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => setOpen(false)}
+          />
+        )}
+        <aside
+          className={`fixed top-0 right-0 h-full w-64 bg-background z-50 transform transition-transform duration-200 ease-in-out ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+          aria-hidden={!open}
+          role="menu"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="h-full flex flex-col">
+            <div className="flex items-center justify-end p-4 border-b">
+              <button
+                aria-label="Close menu"
+                className="p-2 rounded-md focus:outline-none"
+                onClick={() => setOpen(false)}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 6L18 18M6 18L18 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <nav className="flex-1 p-4 overflow-auto">
+              <ul className="space-y-2">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className={`block px-3 py-2 rounded-md ${
+                        pathname === l.href ? "text-primary font-semibold" : ""
+                      }`}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href={`${base}/dashboard`}
+                    className="block px-3 py-2 rounded-md"
+                    onClick={() => setOpen(false)}
+                  >
+                    {t ? t("nav.dashboard") : "Dashboard"}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <div className="p-4 border-t">
+              <div className="mb-2">
+                <LangSwitcher
+                  currentLocale={locale || "en"}
+                  pathname={pathname || base}
+                />
+              </div>
+              <div>
+                <ThemeToggle />
+              </div>
+            </div>
+          </div>
+        </aside>
+      </header>
+
+      {/* PC navbar */}
+      <header className="sticky hidden lg:block top-0 z-40">
+        <nav className="container mx-auto flex items-center justify-between px-4 py-3 border-b-2 nav">
+          <Link href={base} className="font-extrabold tracking-wide text-xl">
+            Star Electronic
+          </Link>
+          <div className="flex items-center gap-2">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`btn btn-link ${
+                  pathname === l.href ? "text-primary" : ""
+                }`}
+              >
+                {l.label}
+              </Link>
+            ))}
+            <Link href={`${base}/dashboard`} className="btn btn-link">
+              {t ? t("nav.dashboard") : "Dashboard"}
+            </Link>
+            <LangSwitcher
+              currentLocale={locale || "en"}
+              pathname={pathname || base}
+            />
+            <ThemeToggle />
+          </div>
+        </nav>
+      </header>
+    </>
   );
 }
 

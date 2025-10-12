@@ -191,9 +191,15 @@ img {
   pointer-events: none;
   top: 0;
   right: 0;
-  width: 50%;
   height: 64px;
+  width: 100%;
   border-bottom: 2px solid var(--primary-color);
+}
+
+@media (width >= 64rem) {
+  .nav::after {
+    width: 90% !important;
+  }
 }
 
 .skew-description {

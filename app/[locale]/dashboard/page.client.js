@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import StarBackground from "@/components/StarBackground";
 import { useEffect, useMemo, useState } from "react";
 
 const FOLDERS = [
@@ -95,21 +96,43 @@ export default function DashboardClient({ locale, messages }) {
 
   if (!authed) {
     return (
-      <div className="container mx-auto px-4 py-10">
-        <div className="mt-40 pl-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight pl-10">
-            {t("dashboard.title")}
-          </h1>
-          <p className="text-muted-foreground mb-6 mt-5">
-            {t("dashboard.enterKey")}
-          </p>
-          <div className="mt-30 flex flex-wrap gap-3 pl-28 text-xl font-bold">
-            <button className="btn btn-outline" onClick={promptKey}>
+      <>
+        {/* Desktop section */}
+        <div className="hidden lg:block container mx-auto px-4 py-10">
+          <StarBackground />
+          <section className="mb-12 relative">
+            <div className="pt-40 pl-4">
+              <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight pl-10">
+                {t("dashboard.title")}
+              </h1>
+              <p className="text-muted-foreground mb-6 mt-5">
+                {t("dashboard.enterKey")}
+              </p>
+              <div className="mt-30 flex flex-wrap gap-3 pl-28 text-xl font-bold">
+                <button className="btn btn-outline" onClick={promptKey}>
+                  {t("dashboard.enterKey")}
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div className="hidden container mx-auto px-4 py-10">
+          <div className="mt-40 pl-4">
+            <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight pl-10">
+              {t("dashboard.title")}
+            </h1>
+            <p className="text-muted-foreground mb-6 mt-5">
               {t("dashboard.enterKey")}
-            </button>
+            </p>
+            <div className="mt-30 flex flex-wrap gap-3 pl-28 text-xl font-bold">
+              <button className="btn btn-outline" onClick={promptKey}>
+                {t("dashboard.enterKey")}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -149,7 +172,7 @@ export default function DashboardClient({ locale, messages }) {
       {loading ? (
         <p>Loading…</p>
       ) : (
-        <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-4">
           {items.map((item, idx) => (
             <li key={item.id} className="card p-0 overflow-hidden">
               <img
