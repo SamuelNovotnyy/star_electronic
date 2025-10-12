@@ -26,13 +26,27 @@ export async function POST(req) {
         secure: false,
         auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
       });
+      const formatter = await import("@/lib/contactEmailFormatter.js");
+      // Send email to business
       await transporter.sendMail({
         from: `Star Electronic Website <no-reply@${new URL(req.url).host}>`,
         to,
         subject: `[Contact] ${subject}`,
-        text: `Name: ${name}\nEmail: ${email}\nPhone: ${
-          phone || ""
-        }\nCompany: ${company || ""}\n\n${message}`,
+        text: formatter.formatContactEmail({
+          name,
+          email,
+          phone,
+          company,
+          subject,
+          message,
+        }),
+      });
+      // Send confirmation email to user
+      await transporter.sendMail({
+        from: `Star Electronic <no-reply@${new URL(req.url).host}>`,
+        to: email,
+        subject: `We received your request at Star Electronic`,
+        text: formatter.formatConfirmationEmail({ name, subject }),
       });
       sent = true;
     }

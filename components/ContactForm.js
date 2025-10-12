@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 
 export default function ContactForm({ messages }) {
   const t = useMemo(() => {
@@ -17,12 +17,13 @@ export default function ContactForm({ messages }) {
   }, [messages]);
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const formRef = useRef(null);
 
   async function onSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setStatus(null);
-    const form = new FormData(e.currentTarget);
+    const form = new FormData(formRef.current);
     const payload = Object.fromEntries(form.entries());
     try {
       const res = await fetch("/api/contact", {
@@ -33,7 +34,7 @@ export default function ContactForm({ messages }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed");
       setStatus({ ok: true, msg: "Message sent. We'll get back shortly." });
-      e.currentTarget.reset();
+      if (formRef.current) formRef.current.reset();
     } catch (err) {
       setStatus({ ok: false, msg: err.message });
     } finally {
@@ -42,7 +43,7 @@ export default function ContactForm({ messages }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 max-w-xl">
+    <form ref={formRef} onSubmit={onSubmit} className="space-y-4 max-w-xl">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="label">Name</label>
