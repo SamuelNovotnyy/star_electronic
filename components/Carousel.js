@@ -14,6 +14,7 @@ export default function Carousel({ folder }) {
   const animTimeout = useRef(null);
   const [disableTransition, setDisableTransition] = useState(false);
   const containerRef = useRef(null);
+  const trackRef = useRef(null);
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
   const [offsetPercent, setOffsetPercent] = useState(0);
@@ -235,7 +236,7 @@ export default function Carousel({ folder }) {
     }
   };
 
-  if (!items.length) return <div className="skeleton h-64 rounded-xl" />;
+  // (do not return early here — hooks must be declared unconditionally)
 
   // utility to pick safely when items < 3
   const pick = (offset) => {
@@ -260,6 +261,59 @@ export default function Carousel({ folder }) {
   const baseTranslate = anim === 0 ? CENTER : anim === 1 ? RIGHT_POS : LEFT_POS;
   const translatePercent = baseTranslate + offsetPercent;
 
+  // dot sizing config
+  const SLIDE_WIDTH_PERCENT = 33.333333;
+  const minDotScale = 1.0; // base (small) dot scale
+  const maxDotScale = 1.2; // scale when slide is exactly centered
+  // computed slide offset (fractional) driven by actual transform (drag or CSS transition)
+  const [computedSlideOffset, setComputedSlideOffset] = useState(null);
+
+  // compute offset in slides (fractional) from dragging (fallback)
+  const dragOffsetSlides = offsetPercent / SLIDE_WIDTH_PERCENT;
+
+  // rAF sampler to read computed transform on the track so dots animate during CSS transitions
+  useEffect(() => {
+    let mounted = true;
+    let rafId = 0;
+
+    const read = () => {
+      rafId = requestAnimationFrame(() => {
+        if (!mounted) return;
+        const node = trackRef.current;
+        const container = containerRef.current;
+        if (node && container) {
+          const st = window.getComputedStyle(node).transform;
+          if (st && st !== "none") {
+            const m = st.match(/matrix.*\((.+)\)/);
+            if (m) {
+              const parts = m[1].split(",").map((p) => parseFloat(p));
+              const tx = parts.length === 6 ? parts[4] : parts[12] || 0;
+              // tx is px relative to track width
+              const pctOfTrack = (tx / node.clientWidth) * 100;
+              // compute slide offset where CENTER corresponds to 0
+              const slideOffset = (pctOfTrack - CENTER) / SLIDE_WIDTH_PERCENT;
+              setComputedSlideOffset(slideOffset);
+            }
+          } else {
+            setComputedSlideOffset(null);
+          }
+        }
+        read();
+      });
+    };
+
+    read();
+    return () => {
+      mounted = false;
+      cancelAnimationFrame(rafId);
+    };
+  }, [offsetPercent]);
+
+  // render placeholder while loading items (must be after hooks)
+  if (!items.length) {
+    return <div className="skeleton h-64 rounded-xl" />;
+  }
+
   return (
     <div className="relative size-full group overflow-hidden">
       <div
@@ -279,6 +333,7 @@ export default function Carousel({ folder }) {
         }}
       >
         <div
+          ref={trackRef}
           className="absolute left-0 top-0 h-full flex"
           style={{
             width: "300%",
@@ -412,7 +467,7 @@ export default function Carousel({ folder }) {
             }}
             aria-label="Previous"
           >
-            ‹
+            <i className="fa-solid fa-caret-left text-2xl" aria-hidden="true" />
           </button>
 
           <button
@@ -444,34 +499,64 @@ export default function Carousel({ folder }) {
             }}
             aria-label="Next"
           >
-            ›
+            <i
+              className="fa-solid fa-caret-right text-2xl"
+              aria-hidden="true"
+            />
           </button>
         </div>
         {/* dots indicator */}
         <div className="absolute left-0 right-0 bottom-3 flex justify-center pointer-events-auto">
           <div className="flex gap-4 bg-transparent p-1">
-            {items.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => jumpTo(i)}
-                onPointerDown={(e) => {
-                  // prevent the pointerdown from starting a drag on the track
-                  e.stopPropagation();
-                }}
-                onTouchStart={(e) => {
-                  // stop drag start and let the click/touch trigger jumpTo
-                  e.stopPropagation();
-                }}
-                aria-label={`Go to slide ${i + 1}`}
-                aria-current={i === idx ? "true" : "false"}
-                className={`transition-colors flex items-center justify-center ${
-                  i === idx
-                    ? "w-3 h-3 md:w-4 md:h-4 rounded-full bg-white ring-2 ring-white"
-                    : "w-3 h-3 md:w-4 md:h-4 rounded-full bg-white/40"
-                } cursor-pointer`}
-              />
-            ))}
+            {items.map((_, i) => {
+              const total = items.length;
+              const offsetSlides = computedSlideOffset ?? dragOffsetSlides;
+              // raw distance in slides from i to current idx (fractional by offsetSlides)
+              // Note sign: positive offsetSlides means the view has moved to the left, so compare i - idx + offset
+              let raw = i - idx + offsetSlides;
+              // wrap to [-n/2, n/2]
+              while (raw <= -total / 2) raw += total;
+              while (raw > total / 2) raw -= total;
+              const distance = Math.abs(raw);
+              // convert distance to closeness in 0..1, then apply smoothstep for nicer curve
+              let rawCloseness = Math.max(0, 1 - distance);
+              // if we're extremely close to center, snap to exact 1 so dragging hits full size
+              if (Math.abs(distance) < 0.0005) rawCloseness = 1;
+              // smoothstep: 3t^2 - 2t^3
+              const t = rawCloseness;
+              const smooth = 3 * t * t - 2 * t * t * t;
+              const scale = minDotScale + (maxDotScale - minDotScale) * smooth;
+              // color blend: 0 -> gray (120), 1 -> white (255)
+              const gray = Math.round(120 + (255 - 120) * smooth);
+              const bg = `rgb(${gray},${gray},${gray})`;
+              const style = {
+                transform: `scale(${scale})`,
+                background: bg,
+                border: "none",
+                padding: 0,
+                width: undefined,
+                height: undefined,
+              };
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => jumpTo(i)}
+                  onPointerDown={(e) => {
+                    // prevent the pointerdown from starting a drag on the track
+                    e.stopPropagation();
+                  }}
+                  onTouchStart={(e) => {
+                    // stop drag start and let the click/touch trigger jumpTo
+                    e.stopPropagation();
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
+                  aria-current={i === idx ? "true" : "false"}
+                  style={style}
+                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full flex items-center justify-center cursor-pointer`}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
