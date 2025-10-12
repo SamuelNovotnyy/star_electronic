@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "gallery": "Galerie",
+    "contact": "Contact",
+    "dashboard": "Admin"
+  },
+  "hero": {
+    "title": "Électronique de précision.",
+    "title2": "Résultats clairs.",
+    "subtitle": "Star Electronic fournit des composants fiables et un service réactif.",
+    "ctaQuote": "Demander un devis",
+    "ctaGallery": "Voir la galerie"
+  },
+  "features": {
+    "supply": {
+      "title": "Approvisionnement",
+      "desc": "Fournisseurs fiables avec traçabilité complète."
+    },
+    "assembly": {
+      "title": "Support d'assemblage",
+      "desc": "Des petites séries à l'échelle."
+    },
+    "response": {
+      "title": "Réactivité",
+      "desc": "Communication claire et délais rapides."
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "intro": "Une sélection de produits et projets récents."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "intro": "Réponse sous un jour ouvré.",
+    "send": "Envoyer le message",
+    "sending": "Envoi…"
+  },
+  "dashboard": {
+    "title": "Admin",
+    "enterKey": "Entrer la clé d'accès",
+    "upload": "Téléverser",
+    "refresh": "Rafraîchir",
+    "save": "Enregistrer les descriptions"
+  }
+}

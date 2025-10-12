@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Start",
+    "gallery": "Galerie",
+    "contact": "Kontakt",
+    "dashboard": "Admin"
+  },
+  "hero": {
+    "title": "Präzisionselektronik.",
+    "title2": "Klare Ergebnisse.",
+    "subtitle": "Star Electronic liefert zuverlässige Komponenten und schnellen Service.",
+    "ctaQuote": "Angebot anfordern",
+    "ctaGallery": "Galerie ansehen"
+  },
+  "features": {
+    "supply": {
+      "title": "Beschaffung",
+      "desc": "Vertrauenswürdige Lieferanten mit vollständiger Rückverfolgbarkeit."
+    },
+    "assembly": {
+      "title": "Montageunterstützung",
+      "desc": "Von Kleinserien bis zur Skalierung."
+    },
+    "response": {
+      "title": "Schnelle Reaktion",
+      "desc": "Klare Kommunikation und kurze Durchlaufzeiten."
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "intro": "Eine Auswahl aktueller Produkte und Projekte."
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "intro": "Wir melden uns innerhalb eines Werktags.",
+    "send": "Nachricht senden",
+    "sending": "Senden…"
+  },
+  "dashboard": {
+    "title": "Admin",
+    "enterKey": "Zugangsschlüssel eingeben",
+    "upload": "Hochladen",
+    "refresh": "Aktualisieren",
+    "save": "Beschreibungen speichern"
+  }
+}

@@ -1,4 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- @format -->
+
+# Star Electronic website
+
+This is a Next.js 15 app using the App Router with Tailwind (light use via our own CSS) and two fonts: Poppins and Rasa. It provides:
+
+- Landing page with carousel
+- Gallery loaded from storage
+- Contact form emailing details
+- Protected dashboard at `/dashboard` for uploading images, reordering, and editing descriptions
+
+## Quick start
+
+1. Install dependencies
+2. Set environment variables (create `.env.local`)
+3. Start dev server
+
+## Environment variables
+
+Create a `.env.local` file:
+
+```dotenv
+DASHBOARD_KEY=changeme
+# Contact email (optional, defaults to info@star-electronic.example)
+CONTACT_TO=you@example.com
+
+# Public site URL for SEO (used in metadata, OG/Twitter, hreflang)
+NEXT_PUBLIC_SITE_URL=https://www.starelectronic.example
+
+# SMTP settings (optional; if missing, contact requests are logged to server console)
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=username
+SMTP_PASS=pa55w0rd
+```
+
+## Storage
+
+By default, images are stored under `public/uploads/<folder>` with metadata in `data/<folder>.json`. Folders used:
+
+- `star_electronic_carousel`
+- `star_electronic_gallery`
+
+You can later swap `lib/storage.js` with a Google Drive implementation using service account credentials.
+
+## SEO
+
+- Set `NEXT_PUBLIC_SITE_URL` to your production domain.
+- We embed Open Graph, Twitter, hreflang alternates, and JSON-LD Organization schema in `app/[locale]/layout.js`.
+- Consider adding a `sitemap.xml` and `robots.txt`. If you want, I can add a simple sitemap generator next.
+  This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 

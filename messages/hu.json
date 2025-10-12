@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Főoldal",
+    "gallery": "Galéria",
+    "contact": "Kapcsolat",
+    "dashboard": "Admin"
+  },
+  "hero": {
+    "title": "Precíz elektronika.",
+    "title2": "Tiszta eredmények.",
+    "subtitle": "A Star Electronic megbízható alkatrészeket és gyors támogatást nyújt.",
+    "ctaQuote": "Árajánlat kérése",
+    "ctaGallery": "Galéria megtekintése"
+  },
+  "features": {
+    "supply": {
+      "title": "Beszerzés",
+      "desc": "Megbízható beszállítók teljes nyomon követhetőséggel."
+    },
+    "assembly": {
+      "title": "Összeszerelés támogatás",
+      "desc": "Kis szériától a skálázásig."
+    },
+    "response": {
+      "title": "Gyors reagálás",
+      "desc": "Tiszta kommunikáció és rövid határidők."
+    }
+  },
+  "gallery": {
+    "title": "Galéria",
+    "intro": "Válogatás a legutóbbi termékekből és projektekből."
+  },
+  "contact": {
+    "title": "Lépjen kapcsolatba velünk",
+    "intro": "Egy munkanapon belül válaszolunk.",
+    "send": "Üzenet küldése",
+    "sending": "Küldés…"
+  },
+  "dashboard": {
+    "title": "Admin",
+    "enterKey": "Adja meg a hozzáférési kulcsot",
+    "upload": "Feltöltés",
+    "refresh": "Frissítés",
+    "save": "Leírások mentése"
+  }
+}

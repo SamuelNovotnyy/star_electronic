@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "Precision electronics.",
+    "title2": "Clear results.",
+    "subtitle": "Star Electronic delivers reliable components and responsive service for projects that demand more.",
+    "ctaQuote": "Get a quote",
+    "ctaGallery": "View gallery"
+  },
+  "features": {
+    "supply": {
+      "title": "Sourcing & Supply",
+      "desc": "Trusted parts from vetted distributors with full traceability."
+    },
+    "assembly": {
+      "title": "Assembly Support",
+      "desc": "From small runs to scale, we keep your line moving."
+    },
+    "response": {
+      "title": "Rapid Response",
+      "desc": "Clear communication and quick turnarounds you can plan around."
+    }
+  },
+  "gallery": {
+    "title": "Gallery",
+    "intro": "A selection of recent products and projects."
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "Tell us about your needs and we’ll respond within one business day.",
+    "send": "Send message",
+    "sending": "Sending…"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "enterKey": "Enter access key",
+    "upload": "Upload",
+    "refresh": "Refresh",
+    "save": "Save descriptions"
+  }
+}

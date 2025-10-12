@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Domů",
+    "gallery": "Galerie",
+    "contact": "Kontakt",
+    "dashboard": "Správa"
+  },
+  "hero": {
+    "title": "Precizní elektronika.",
+    "title2": "Jasné výsledky.",
+    "subtitle": "Star Electronic dodává spolehlivé komponenty a rychlou podporu.",
+    "ctaQuote": "Získat nabídku",
+    "ctaGallery": "Zobrazit galerii"
+  },
+  "features": {
+    "supply": {
+      "title": "Zajištění dodávek",
+      "desc": "Prověření dodavatelé a plná dohledatelnost."
+    },
+    "assembly": {
+      "title": "Podpora montáže",
+      "desc": "Od malých sérií po škálování."
+    },
+    "response": {
+      "title": "Rychlá odezva",
+      "desc": "Jasná komunikace a krátké termíny."
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "intro": "Výběr nedávných produktů a projektů."
+  },
+  "contact": {
+    "title": "Kontaktujte nás",
+    "intro": "Ozveme se do jednoho pracovního dne.",
+    "send": "Odeslat zprávu",
+    "sending": "Odesílám…"
+  },
+  "dashboard": {
+    "title": "Správa",
+    "enterKey": "Zadejte přístupový klíč",
+    "upload": "Nahrát",
+    "refresh": "Obnovit",
+    "save": "Uložit popisy"
+  }
+}
