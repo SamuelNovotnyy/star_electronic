@@ -13,17 +13,19 @@
     "ctaGallery": "View gallery"
   },
   "features": {
-    "supply": {
-      "title": "Sourcing & Supply",
-      "desc": "Trusted parts from vetted distributors with full traceability."
+    "title": "Why Choose Star Electronic?",
+    "subtitle": "We combine cutting-edge technology with artisanal craftsmanship to deliver the best IoT solutions.",
+    "security": {
+      "title": "Top Security",
+      "desc": "Our devices are built with security-first architecture to keep your home safe and private."
     },
-    "assembly": {
-      "title": "Assembly Support",
-      "desc": "From small runs to scale, we keep your line moving."
+    "performance": {
+      "title": "High Performance",
+      "desc": "Optimized for speed and reliability, ensuring your smart home responds instantly."
     },
-    "response": {
-      "title": "Rapid Response",
-      "desc": "Clear communication and quick turnarounds you can plan around."
+    "support": {
+      "title": "24/7 Support",
+      "desc": "Our dedicated team is always ready to assist you with any questions or setup needs."
     }
   },
   "gallery": {
@@ -60,5 +62,15 @@
     "upload": "Upload",
     "refresh": "Refresh",
     "save": "Save descriptions"
+  },
+  "footer": {
+    "description": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010.",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "address": "123 Star Street, Tech City, TC 90210",
+    "email": "info@star-electronic.example",
+    "phone": "+1 (555) 123-4567",
+    "followUs": "Follow Us",
+    "copyright": "© {year} Star Electronic. All rights reserved."
   }
 }

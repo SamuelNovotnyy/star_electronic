@@ -87,7 +87,7 @@ export default async function LocaleLayout({ children, params }) {
     <>
       <Navbar messages={messages} locale={locale} />
       <main className="min-h-[70vh]">{children}</main>
-      <Footer />
+      <Footer messages={messages} locale={locale} />
     </>
   );
 }

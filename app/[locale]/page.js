@@ -1,11 +1,11 @@
 /** @format */
-import Carousel from "../../components/Carousel";
-import Link from "next/link";
-import { getMessages } from "../../lib/i18n";
-import StarBackground from "@/components/StarBackground";
+import Carousel from '../../components/Carousel';
+import Link from 'next/link';
+import { getMessages } from '../../lib/i18n';
+import StarBackground from '@/components/StarBackground';
 
 function spanify(text) {
-  return text.split(" ").map((word, index) => <span key={index}>{word} </span>);
+  return text.split(' ').map((word, index) => <span key={index}>{word} </span>);
 }
 
 export default async function HomePage({ params }) {
@@ -13,7 +13,7 @@ export default async function HomePage({ params }) {
   const messages = getMessages(locale);
   const t = (key, fallback) =>
     key
-      .split(".")
+      .split('.')
       .reduce(
         (o, k) => (o && o[k] !== undefined ? o[k] : undefined),
         messages
@@ -83,17 +83,16 @@ export default async function HomePage({ params }) {
       ></div>
 
       {/* Features Section */}
-      <section className="relative z-10 bg-background py-[85px] top-shadow-middle">
+      <section className="relative min-h-[565px] z-10 bg-background py-[85px] top-shadow-middle">
         {' '}
         {/* Added bg-background and z-10 and shadow */}
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-              Why Choose Star Electronic?
+              {t('features.title')}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We combine cutting-edge technology with artisanal craftsmanship to
-              deliver the best IoT solutions.
+              {t('features.subtitle')}
             </p>
           </div>
 
@@ -102,10 +101,11 @@ export default async function HomePage({ params }) {
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-6">
                 <i className="fas fa-shield-alt"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">Top Security</h3>
+              <h3 className="text-xl font-bold mb-3">
+                {t('features.security.title')}
+              </h3>
               <p className="text-muted-foreground">
-                Our devices are built with security-first architecture to keep
-                your home safe and private.
+                {t('features.security.desc')}
               </p>
             </div>
 
@@ -113,10 +113,11 @@ export default async function HomePage({ params }) {
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-6">
                 <i className="fas fa-bolt"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">High Performance</h3>
+              <h3 className="text-xl font-bold mb-3">
+                {t('features.performance.title')}
+              </h3>
               <p className="text-muted-foreground">
-                Optimized for speed and reliability, ensuring your smart home
-                responds instantly.
+                {t('features.performance.desc')}
               </p>
             </div>
 
@@ -124,10 +125,11 @@ export default async function HomePage({ params }) {
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-6">
                 <i className="fas fa-headset"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">24/7 Support</h3>
+              <h3 className="text-xl font-bold mb-3">
+                {t('features.support.title')}
+              </h3>
               <p className="text-muted-foreground">
-                Our dedicated team is always ready to assist you with any
-                questions or setup needs.
+                {t('features.support.desc')}
               </p>
             </div>
           </div>

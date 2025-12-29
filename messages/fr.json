@@ -13,20 +13,20 @@
     "ctaGallery": "Voir la galerie"
   },
   "features": {
-    "supply": {
-      "title": "Approvisionnement",
-      "desc": "Fournisseurs fiables avec traçabilité complète."
-    },
-    "assembly": {
-      "title": "Support d'assemblage",
-      "desc": "Des petites séries à l'échelle."
-    },
-    "response": {
-      "title": "Réactivité",
-      "desc": "Communication claire et délais rapides."
-    },
     "title": "Pourquoi choisir Star Electronic ?",
-    "subtitle": "Nous combinons technologie de pointe et savoir-faire artisanal pour offrir les meilleures solutions IoT."
+    "subtitle": "Nous combinons technologie de pointe et savoir-faire artisanal pour offrir les meilleures solutions IoT.",
+    "security": {
+      "title": "Sécurité maximale",
+      "desc": "Nos appareils sont construits avec une architecture axée sur la sécurité pour garder votre maison sûre et privée."
+    },
+    "performance": {
+      "title": "Haute performance",
+      "desc": "Optimisé pour la vitesse et la fiabilité, assurant une réponse instantanée de votre maison intelligente."
+    },
+    "support": {
+      "title": "Support 24/7",
+      "desc": "Notre équipe dédiée est toujours prête à vous aider pour toute question ou besoin de configuration."
+    }
   },
   "gallery": {
     "title": "Galerie",
@@ -69,23 +69,13 @@
     }
   },
   "footer": {
-    "brand": {
-      "title": "Star Electronic",
-      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
-    },
-    "quickLinks": {
-      "title": "Quick Links",
-      "home": "Home",
-      "gallery": "Gallery",
-      "contact": "Contact"
-    },
-    "contact": {
-      "title": "Contact Us",
-      "address": "123 Star Street, Tech City, TC 90210"
-    },
-    "follow": {
-      "title": "Follow Us"
-    },
-    "rights": "Star Electronic. All rights reserved."
+    "description": "Fourniture de composants IoT fiables et d'un service réactif pour les maisons intelligentes et les entreprises depuis 2010.",
+    "quickLinks": "Liens rapides",
+    "contactUs": "Contactez-nous",
+    "address": "123 Star Street, Tech City, TC 90210",
+    "email": "info@star-electronic.example",
+    "phone": "+1 (555) 123-4567",
+    "followUs": "Suivez-nous",
+    "copyright": "© {year} Star Electronic. Tous droits réservés."
   }
 }

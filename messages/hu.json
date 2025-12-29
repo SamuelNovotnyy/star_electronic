@@ -13,20 +13,20 @@
     "ctaGallery": "Galéria megtekintése"
   },
   "features": {
-    "supply": {
-      "title": "Beszerzés",
-      "desc": "Megbízható beszállítók teljes nyomon követhetőséggel."
-    },
-    "assembly": {
-      "title": "Összeszerelés támogatás",
-      "desc": "Kis szériától a skálázásig."
-    },
-    "response": {
-      "title": "Gyors reagálás",
-      "desc": "Tiszta kommunikáció és rövid határidők."
-    },
     "title": "Miért válassza a Star Electronic-ot?",
-    "subtitle": "A csúcstechnológiát ötvözzük a kézműves szakértelemmel a legjobb IoT megoldások érdekében."
+    "subtitle": "A csúcstechnológiát ötvözzük a kézműves szakértelemmel a legjobb IoT megoldások érdekében.",
+    "security": {
+      "title": "Csúcsbiztonság",
+      "desc": "Eszközeink biztonság-első architektúrával készülnek, hogy otthona biztonságos és privát maradjon."
+    },
+    "performance": {
+      "title": "Nagy teljesítmény",
+      "desc": "Sebességre és megbízhatóságra optimalizálva, biztosítva okosotthona azonnali válaszát."
+    },
+    "support": {
+      "title": "24/7 Támogatás",
+      "desc": "Elkötelezett csapatunk mindig készen áll, hogy segítsen bármilyen kérdésben vagy beállításban."
+    }
   },
   "gallery": {
     "title": "Galéria",
@@ -69,23 +69,13 @@
     }
   },
   "footer": {
-    "brand": {
-      "title": "Star Electronic",
-      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
-    },
-    "quickLinks": {
-      "title": "Quick Links",
-      "home": "Home",
-      "gallery": "Gallery",
-      "contact": "Contact"
-    },
-    "contact": {
-      "title": "Contact Us",
-      "address": "123 Star Street, Tech City, TC 90210"
-    },
-    "follow": {
-      "title": "Follow Us"
-    },
-    "rights": "Star Electronic. All rights reserved."
+    "description": "Megbízható IoT alkatrészek és gyors szolgáltatás okos otthonok és vállalkozások számára 2010 óta.",
+    "quickLinks": "Gyors linkek",
+    "contactUs": "Lépjen kapcsolatba velünk",
+    "address": "123 Star Street, Tech City, TC 90210",
+    "email": "info@star-electronic.example",
+    "phone": "+1 (555) 123-4567",
+    "followUs": "Kövessen minket",
+    "copyright": "© {year} Star Electronic. Minden jog fenntartva."
   }
 }

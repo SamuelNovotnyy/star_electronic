@@ -13,20 +13,20 @@
     "ctaGallery": "Zobrazit galerii"
   },
   "features": {
-    "supply": {
-      "title": "Zajištění dodávek",
-      "desc": "Prověření dodavatelé a plná dohledatelnost."
-    },
-    "assembly": {
-      "title": "Podpora montáže",
-      "desc": "Od malých sérií po škálování."
-    },
-    "response": {
-      "title": "Rychlá odezva",
-      "desc": "Jasná komunikace a krátké termíny."
-    },
     "title": "Proč zvolit Star Electronic?",
-    "subtitle": "Kombinujeme špičkovou technologii s řemeslným zpracováním pro nejlepší IoT řešení."
+    "subtitle": "Kombinujeme špičkovou technologii s řemeslným zpracováním pro nejlepší IoT řešení.",
+    "security": {
+      "title": "Špičkové zabezpečení",
+      "desc": "Naše zařízení jsou postavena na architektuře security-first, aby byl váš domov v bezpečí a soukromí."
+    },
+    "performance": {
+      "title": "Vysoký výkon",
+      "desc": "Optimalizováno pro rychlost a spolehlivost, zajišťující okamžitou odezvu vaší chytré domácnosti."
+    },
+    "support": {
+      "title": "Podpora 24/7",
+      "desc": "Náš specializovaný tým je vždy připraven vám pomoci s jakýmikoli dotazy nebo nastavením."
+    }
   },
   "gallery": {
     "title": "Galerie",
@@ -87,5 +87,15 @@
       "title": "Follow Us"
     },
     "rights": "Star Electronic. All rights reserved."
+  },
+  "footer": {
+    "description": "Dodáváme spolehlivé IoT komponenty a rychlý servis pro chytré domácnosti a firmy již od roku 2010.",
+    "quickLinks": "Rychlé odkazy",
+    "contactUs": "Kontaktujte nás",
+    "address": "123 Star Street, Tech City, TC 90210",
+    "email": "info@star-electronic.example",
+    "phone": "+1 (555) 123-4567",
+    "followUs": "Sledujte nás",
+    "copyright": "© {year} Star Electronic. Všechna práva vyhrazena."
   }
 }
