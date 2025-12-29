@@ -24,7 +24,9 @@
     "response": {
       "title": "Rychlá odezva",
       "desc": "Jasná komunikace a krátké termíny."
-    }
+    },
+    "title": "Proč zvolit Star Electronic?",
+    "subtitle": "Kombinujeme špičkovou technologii s řemeslným zpracováním pro nejlepší IoT řešení."
   },
   "gallery": {
     "title": "Galerie",
@@ -41,6 +43,33 @@
     "enterKey": "Zadejte přístupový klíč",
     "upload": "Nahrát",
     "refresh": "Obnovit",
-    "save": "Uložit popisy"
+    "save": "Uložit popisy",
+    "access": {
+      "title": "Přístup do správy",
+      "desc": "Pro pokračování zadejte svůj autorizační klíč.",
+      "button": "Zadat klíč"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Star Electronic",
+      "desc": "Dodáváme spolehlivé IoT komponenty a rychlý servis pro chytré domácnosti a firmy od roku 2010."
+    },
+    "quickLinks": {
+      "title": "Rychlé odkazy",
+      "home": "Domů",
+      "gallery": "Galerie",
+      "contact": "Kontakt"
+    },
+    "contact": {
+      "title": "Kontaktujte nás",
+      "address": "123 Star Street, Tech City, TC 90210",
+      "email": "info@star-electronic.example",
+      "phone": "+1 (555) 123-4567"
+    },
+    "follow": {
+      "title": "Sledujte nás"
+    },
+    "copyright": "© {year} Star Electronic. Všechna práva vyhrazena."
   }
 }

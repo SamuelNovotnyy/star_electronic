@@ -1,37 +1,64 @@
 /** @format */
-import "../globals.css";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import { locales, defaultLocale } from "../../i18n.config";
-import { getMessages } from "../../lib/i18n";
+import '../globals.css';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { locales, defaultLocale } from '../../i18n.config';
+import { getMessages } from '../../lib/i18n';
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return locales.map(locale => ({ locale }));
 }
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const loc = locale || defaultLocale;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const title = "Star Electronic";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const title = 'Star Electronic | IoT Solutions for Smart Homes';
   const description =
-    "Star Electronic delivers reliable components and responsive service.";
+    'Star Electronic delivers reliable components and responsive service for smart homes and businesses. Explore our gallery and contact us today.';
 
   // hreflang alternates
   const languages = Object.fromEntries(
-    locales.map((l) => [l, `${siteUrl}/${l}`])
+    locales.map(l => [l, `${siteUrl}/${l}`])
   );
   return {
-    title,
+    title: {
+      default: title,
+      template: `%s | Star Electronic`,
+    },
     description,
+    keywords: [
+      'IoT',
+      'Smart Home',
+      'Electronics',
+      'Components',
+      'Star Electronic',
+    ],
+    authors: [{ name: 'Star Electronic Team' }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: `${siteUrl}/${loc}`,
       languages,
     },
     openGraph: {
-      type: "website",
+      type: 'website',
       url: `${siteUrl}/${loc}`,
-      siteName: title,
+      siteName: 'Star Electronic',
       title,
       description,
       images: [
@@ -39,12 +66,12 @@ export async function generateMetadata({ params }) {
           url: `${siteUrl}/favicon.ico`,
           width: 64,
           height: 64,
-          alt: title,
+          alt: 'Star Electronic Logo',
         },
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: 'summary_large_image',
       title,
       description,
       images: [`${siteUrl}/favicon.ico`],

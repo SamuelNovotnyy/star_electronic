@@ -11,12 +11,18 @@
   --muted: 107 114 128; /* gray-500 */
   --border: 229 231 235; /* gray-200 */
   --primary: 255 100 103; /* red-400 */
+  --landing-page-shadow: 0, 0, 0, 0.1;
+  --card-shadow-hover-color: 69, 69, 69, 0.1;
+
   --bg: rgb(var(--background));
   --fg: rgb(var(--foreground));
   --hvrd: rgb(var(--hovered));
   --muted-fg: rgb(var(--muted));
   --border-color: rgb(var(--border));
   --primary-color: rgb(var(--primary));
+  --landingpage-shadow: rgba(var(--landing-page-shadow));
+  --card-shadow-hover: rgba(var(--card-shadow-hover-color));
+
 }
 
 .dark :root,
@@ -26,7 +32,8 @@
   --hovered: 30 30 30;
   --muted: 156 163 175;
   --border: 38 38 38;
-  --primary: 255 100 103; /* red-400 */
+  --landing-page-shadow: 200, 200, 200, 0.15;
+  --card-shadow-hover-color: 255, 255, 255, 0.1;
 }
 
 /* Base */
@@ -192,7 +199,7 @@ img {
   pointer-events: none;
   top: 0;
   right: 0;
-  height: 64px;
+  height: 68px;
   width: 100%;
   border-bottom: 2px solid var(--primary-color);
 }
@@ -210,6 +217,15 @@ img {
 .skew-description > span {
   display: inline-block;
   transform: skew(-17deg);
+}
+
+.skew-hero {
+  transform: skew(-42deg);
+}
+
+.skew-hero > span {
+  display: inline-block;
+  transform: skew(42deg);
 }
 
 .footer {
@@ -230,4 +246,18 @@ img {
   -moz-box-shadow: 0px var(--shadow-top-offset) var(--shadow-blur-size) -100px var(
       --shadow-color
     ) inset;
+}
+
+.top-shadow-middle {
+--shadow-blur: 15px;
+
+-webkit-box-shadow: 0px calc(-1*var(--shadow-blur)) var(--shadow-blur) calc(-1*var(--shadow-blur)) var(--landingpage-shadow); 
+box-shadow: 0px calc(-1*var(--shadow-blur)) var(--shadow-blur) calc(-1*var(--shadow-blur)) var(--landingpage-shadow);
+}
+
+.card-shadow-hover {
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+}
+.card-shadow-hover:hover {
+  box-shadow: 3px 10px 15px var(--card-shadow-hover);
 }

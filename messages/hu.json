@@ -24,7 +24,9 @@
     "response": {
       "title": "Gyors reagálás",
       "desc": "Tiszta kommunikáció és rövid határidők."
-    }
+    },
+    "title": "Miért válassza a Star Electronic-ot?",
+    "subtitle": "A csúcstechnológiát ötvözzük a kézműves szakértelemmel a legjobb IoT megoldások érdekében."
   },
   "gallery": {
     "title": "Galéria",
@@ -41,6 +43,33 @@
     "enterKey": "Adja meg a hozzáférési kulcsot",
     "upload": "Feltöltés",
     "refresh": "Frissítés",
-    "save": "Leírások mentése"
+    "save": "Leírások mentése",
+    "access": {
+      "title": "Irányítópult hozzáférés",
+      "desc": "Kérjük, adja meg az engedélyezési kulcsot a folytatáshoz.",
+      "button": "Kulcs megadása"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Star Electronic",
+      "desc": "Megbízható IoT alkatrészek és gyors szerviz okosotthonok és vállalkozások számára 2010 óta."
+    },
+    "quickLinks": {
+      "title": "Gyors linkek",
+      "home": "Főoldal",
+      "gallery": "Galéria",
+      "contact": "Kapcsolat"
+    },
+    "contact": {
+      "title": "Lépjen kapcsolatba velünk",
+      "address": "123 Star Street, Tech City, TC 90210",
+      "email": "info@star-electronic.example",
+      "phone": "+1 (555) 123-4567"
+    },
+    "follow": {
+      "title": "Kövessen minket"
+    },
+    "copyright": "© {year} Star Electronic. Minden jog fenntartva."
   }
 }

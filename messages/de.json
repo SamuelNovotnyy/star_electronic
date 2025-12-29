@@ -24,7 +24,9 @@
     "response": {
       "title": "Schnelle Reaktion",
       "desc": "Klare Kommunikation und kurze Durchlaufzeiten."
-    }
+    },
+    "title": "Warum Star Electronic wählen?",
+    "subtitle": "Wir kombinieren Spitzentechnologie mit handwerklichem Können für die besten IoT-Lösungen."
   },
   "gallery": {
     "title": "Galerie",
@@ -41,6 +43,33 @@
     "enterKey": "Zugangsschlüssel eingeben",
     "upload": "Hochladen",
     "refresh": "Aktualisieren",
-    "save": "Beschreibungen speichern"
+    "save": "Beschreibungen speichern",
+    "access": {
+      "title": "Dashboard-Zugriff",
+      "desc": "Bitte geben Sie Ihren Autorisierungsschlüssel ein, um fortzufahren.",
+      "button": "Schlüssel eingeben"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Star Electronic",
+      "desc": "Wir liefern zuverlässige IoT-Komponenten und reaktionsschnellen Service für Smart Homes und Unternehmen seit 2010."
+    },
+    "quickLinks": {
+      "title": "Schnelllinks",
+      "home": "Startseite",
+      "gallery": "Galerie",
+      "contact": "Kontakt"
+    },
+    "contact": {
+      "title": "Kontaktieren Sie uns",
+      "address": "123 Star Street, Tech City, TC 90210",
+      "email": "info@star-electronic.example",
+      "phone": "+1 (555) 123-4567"
+    },
+    "follow": {
+      "title": "Folgen Sie uns"
+    },
+    "copyright": "© {year} Star Electronic. Alle Rechte vorbehalten."
   }
 }

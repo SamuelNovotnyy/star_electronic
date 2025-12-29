@@ -91,9 +91,8 @@ export default function Navbar({ messages, locale }) {
           />
         )}
         <aside
-          className={`fixed top-0 right-0 h-full w-64 bg-background z-50 transform transition-transform duration-200 ease-in-out ${
-            open ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 h-full w-64 bg-background z-50 transform transition-transform duration-200 ease-in-out ${open ? "translate-x-0" : "translate-x-full"
+            }`}
           aria-hidden={!open}
           role="menu"
           onClick={(e) => e.stopPropagation()}
@@ -128,23 +127,13 @@ export default function Navbar({ messages, locale }) {
                     <Link
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className={`block px-3 py-2 rounded-md ${
-                        pathname === l.href ? "text-primary font-semibold" : ""
-                      }`}
+                      className={`block px-3 py-2 rounded-md ${pathname === l.href ? "text-primary font-semibold" : ""
+                        }`}
                     >
                       {l.label}
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link
-                    href={`${base}/dashboard`}
-                    className="block px-3 py-2 rounded-md"
-                    onClick={() => setOpen(false)}
-                  >
-                    {t ? t("nav.dashboard") : "Dashboard"}
-                  </Link>
-                </li>
               </ul>
             </nav>
             <div className="p-4 border-t">
@@ -163,7 +152,7 @@ export default function Navbar({ messages, locale }) {
       </header>
 
       {/* PC navbar */}
-      <header className="sticky hidden lg:block top-0 z-40">
+      <header className="sticky hidden lg:block top-0 z-40 bg-background">
         <nav className="container mx-auto flex items-center justify-between px-4 py-3 border-b-2 nav">
           <Link href={base} className="font-extrabold tracking-wide text-xl">
             Star Electronic
@@ -173,16 +162,12 @@ export default function Navbar({ messages, locale }) {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`btn btn-link ${
-                  pathname === l.href ? "text-primary" : ""
-                }`}
+                className={`btn btn-link ${pathname === l.href ? "text-primary" : ""
+                  }`}
               >
                 {l.label}
               </Link>
             ))}
-            <Link href={`${base}/dashboard`} className="btn btn-link">
-              {t ? t("nav.dashboard") : "Dashboard"}
-            </Link>
             <LangSwitcher
               currentLocale={locale || "en"}
               pathname={pathname || base}
@@ -390,9 +375,8 @@ function LangSwitcher({ currentLocale, pathname }) {
           {hasMounted ? labels[current] : "English"}
         </span>
         <i
-          className={`fa-solid fa-caret-down ml-2 opacity-70 duration-300 ease-in-out ${
-            open ? "-rotate-180" : ""
-          }`}
+          className={`fa-solid fa-caret-down ml-2 opacity-70 duration-300 ease-in-out ${open ? "-rotate-180" : ""
+            }`}
         ></i>
       </button>
       {open && (
@@ -404,9 +388,8 @@ function LangSwitcher({ currentLocale, pathname }) {
             <button
               key={l}
               role="menuitem"
-              className={`flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[color-mix(in_srgb,var(--fg)_6%,transparent)] ${
-                l === (hasMounted ? current : "en") ? "text-primary" : ""
-              }`}
+              className={`flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[color-mix(in_srgb,var(--fg)_6%,transparent)] ${l === (hasMounted ? current : "en") ? "text-primary" : ""
+                }`}
               style={{ minWidth: 0 }}
               onClick={() => {
                 setOpen(false);

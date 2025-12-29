@@ -24,7 +24,9 @@
     "response": {
       "title": "Szybka reakcja",
       "desc": "Jasna komunikacja i krótkie terminy."
-    }
+    },
+    "title": "Dlaczego warto wybrać Star Electronic?",
+    "subtitle": "Łączymy najnowocześniejszą technologię z rzemiosłem, aby dostarczać najlepsze rozwiązania IoT."
   },
   "gallery": {
     "title": "Galeria",
@@ -41,6 +43,33 @@
     "enterKey": "Wprowadź klucz dostępu",
     "upload": "Prześlij",
     "refresh": "Odśwież",
-    "save": "Zapisz opisy"
+    "save": "Zapisz opisy",
+    "access": {
+      "title": "Dostęp do panelu",
+      "desc": "Wprowadź klucz autoryzacyjny, aby kontynuować.",
+      "button": "Wprowadź klucz"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Star Electronic",
+      "desc": "Dostarczamy niezawodne komponenty IoT i szybki serwis dla inteligentnych domów i firm od 2010 roku."
+    },
+    "quickLinks": {
+      "title": "Szybkie linki",
+      "home": "Strona główna",
+      "gallery": "Galeria",
+      "contact": "Kontakt"
+    },
+    "contact": {
+      "title": "Skontaktuj się z nami",
+      "address": "123 Star Street, Tech City, TC 90210",
+      "email": "info@star-electronic.example",
+      "phone": "+1 (555) 123-4567"
+    },
+    "follow": {
+      "title": "Obserwuj nas"
+    },
+    "copyright": "© {year} Star Electronic. Wszelkie prawa zastrzeżone."
   }
 }

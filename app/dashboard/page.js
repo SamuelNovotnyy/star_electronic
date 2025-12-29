@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import StarBackground from "@/components/StarBackground";
 import { useEffect, useState } from "react";
 
 const FOLDERS = [
@@ -96,6 +97,8 @@ export default function DashboardPage() {
   }
 
   return (
+    <>
+    <StarBackground />
     <div className="container mx-auto px-4 py-10">
       <div className="flex items-center gap-4 mb-6">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
@@ -186,5 +189,6 @@ export default function DashboardPage() {
         </ul>
       )}
     </div>
+    </>
   );
 }

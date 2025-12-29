@@ -4,6 +4,7 @@
 
 import StarBackground from "@/components/StarBackground";
 import { useEffect, useMemo, useState } from "react";
+import { locales } from "../../../i18n.config";
 
 const FOLDERS = [
   { key: "star_electronic_carousel", label: "Carousel" },
@@ -11,6 +12,10 @@ const FOLDERS = [
 ];
 
 export default function DashboardClient({ locale, messages }) {
+  const [activeTab, setActiveTab] = useState("carousel"); // 'carousel' | 'gallery' | 'content' | 'colors'
+  const [authed, setAuthed] = useState(false);
+
+  // Translation Helper
   const t = useMemo(() => {
     return (key, fallback) =>
       key
@@ -23,55 +28,164 @@ export default function DashboardClient({ locale, messages }) {
       key;
   }, [messages]);
 
-  const [authed, setAuthed] = useState(false);
-  const [folder, setFolder] = useState(FOLDERS[0].key);
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [descMap, setDescMap] = useState({});
-
+  // Auth Effect
   useEffect(() => {
-    if (!authed) return;
-    refresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authed, folder]);
+    const key = window.localStorage.getItem("dashboard_key");
+    if (key) {
+      checkKey(key).then(valid => {
+        if (valid) setAuthed(true);
+      })
+    }
+  }, []);
 
-  async function refresh() {
-    setLoading(true);
+  async function checkKey(k) {
     try {
-      const res = await fetch(
-        `/api/media?folder=${encodeURIComponent(folder)}`
-      );
-      const data = await res.json();
-      setItems(data.items || []);
-      setDescMap(
-        Object.fromEntries(
-          (data.items || []).map((i) => [i.id, i.description || ""])
-        )
-      );
-    } finally {
-      setLoading(false);
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: k }),
+      });
+      return res.ok;
+    } catch {
+      return false;
     }
   }
 
   function promptKey() {
-    const k = window.prompt(t("dashboard.enterKey"));
+    const k = window.prompt(t("dashboard.enterKey") || "Enter Key");
     if (!k) return;
-    fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key: k }),
-    })
-      .then((r) => (r.ok ? setAuthed(true) : alert("Invalid key")))
-      .catch(() => alert("Error"));
+    checkKey(k).then(valid => {
+      if (valid) {
+        setAuthed(true);
+        window.localStorage.setItem("dashboard_key", k);
+      } else {
+        alert("Invalid key");
+      }
+    });
   }
 
-  async function onReorder(newOrder) {
-    await fetch("/api/media/reorder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ folder, order: newOrder.map((i) => i.id) }),
-    });
+  if (!authed) {
+    return (
+      <div className="relative min-h-screen flex items-center justify-center p-4">
+        <StarBackground />
+        <div className="max-w-md w-full bg-background/80 backdrop-blur-xl border border-border p-8 rounded-3xl shadow-2xl text-center relative z-10">
+          <h1 className="text-3xl font-bold mb-2">Dashboard Access</h1>
+          <p className="text-muted-foreground mb-8">Please enter your authorized key to continue.</p>
+          <button className="btn btn-primary w-full py-4 text-lg" onClick={promptKey}>
+            Enter Key
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const NavItem = ({ tab, icon, label }) => (
+    <button
+      onClick={() => setActiveTab(tab)}
+      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab
+        ? 'bg-primary text-primary-foreground shadow-sm'
+        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+        }`}
+    >
+      <i className={`fas ${icon} w-5 text-center`}></i>
+      {label}
+    </button>
+  );
+
+  return (
+    <div className="flex h-screen bg-background overflow-hidden relative">
+      <StarBackground className="-z-10 opacity-50" />
+
+      {/* Sidebar */}
+      <aside className="w-64 bg-background/60 backdrop-blur-xl border-r border-border flex flex-col z-10">
+        <div className="p-6 border-b border-border">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
+              S
+            </div>
+            <h1 className="text-lg font-bold tracking-tight">Star Admin</h1>
+          </div>
+        </div>
+
+        <nav className="flex-1 p-4 overflow-y-auto space-y-6">
+
+          <div>
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-4">
+              Media Library
+            </h3>
+            <div className="space-y-1">
+              <NavItem tab="carousel" icon="fa-images" label="Carousel" />
+              <NavItem tab="gallery" icon="fa-photo-video" label="Gallery" />
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-4">
+              Text Editing
+            </h3>
+            <div className="space-y-1">
+              <NavItem tab="content" icon="fa-language" label="Content Editor" />
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-4">
+              Design
+            </h3>
+            <div className="space-y-1">
+              <NavItem tab="colors" icon="fa-palette" label="Theme Editor" />
+            </div>
+          </div>
+
+        </nav>
+
+        <div className="p-4 border-t border-border bg-background/40">
+          <button onClick={() => { setAuthed(false); window.localStorage.removeItem("dashboard_key"); }} className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors">
+            <i className="fas fa-sign-out-alt"></i> Sign Out
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto p-8 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          {activeTab === 'carousel' && <MediaManager folderKey="star_electronic_carousel" title="Carousel Manager" showDescriptions={false} />}
+          {activeTab === 'gallery' && <MediaManager folderKey="star_electronic_gallery" title="Gallery Manager" showDescriptions={true} />}
+          {activeTab === 'content' && <ContentEditor currentLocale={locale} />}
+          {activeTab === 'colors' && <ColorEditor />}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+// --- Sub Components ---
+
+function MediaManager({ folderKey, title, showDescriptions = true }) {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [descMap, setDescMap] = useState({});
+
+  // Use folderKey immediately
+  const folder = folderKey;
+
+  useEffect(() => {
     refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [folder]);
+
+  async function refresh() {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/media?folder=${encodeURIComponent(folder)}`);
+      const data = await res.json();
+      setItems(data.items || []);
+      setDescMap(
+        Object.fromEntries((data.items || []).map((i) => [i.id, i.description || ""]))
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function onUpload(e) {
@@ -94,138 +208,569 @@ export default function DashboardClient({ locale, messages }) {
     refresh();
   }
 
-  if (!authed) {
-    return (
-      <>
-        {/* Desktop section */}
-        <div className="hidden lg:block container mx-auto px-4 py-10">
-          <StarBackground />
-          <section className="mb-12 relative">
-            <div className="pt-40 pl-4">
-              <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight pl-10">
-                {t("dashboard.title")}
-              </h1>
-              <p className="text-muted-foreground mb-6 mt-5">
-                {t("dashboard.enterKey")}
-              </p>
-              <div className="mt-30 flex flex-wrap gap-3 pl-28 text-xl font-bold">
-                <button className="btn btn-outline" onClick={promptKey}>
-                  {t("dashboard.enterKey")}
-                </button>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div className="hidden container mx-auto px-4 py-10">
-          <div className="mt-40 pl-4">
-            <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight pl-10">
-              {t("dashboard.title")}
-            </h1>
-            <p className="text-muted-foreground mb-6 mt-5">
-              {t("dashboard.enterKey")}
-            </p>
-            <div className="mt-30 flex flex-wrap gap-3 pl-28 text-xl font-bold">
-              <button className="btn btn-outline" onClick={promptKey}>
-                {t("dashboard.enterKey")}
-              </button>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+  async function onReorder(newOrder) {
+    await fetch("/api/media/reorder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ folder, order: newOrder.map((i) => i.id) }),
+    });
+    refresh();
   }
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="flex items-center gap-4 mb-6">
-        <h1 className="text-2xl font-semibold">{t("dashboard.title")}</h1>
-        <select
-          className="input w-auto"
-          value={folder}
-          onChange={(e) => setFolder(e.target.value)}
-        >
-          {FOLDERS.map((f) => (
-            <option key={f.key} value={f.key}>
-              {f.label}
-            </option>
-          ))}
-        </select>
-        <label className="btn btn-outline cursor-pointer">
-          {t("dashboard.upload")}
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={onUpload}
-          />
-        </label>
-        <button className="btn" onClick={refresh}>
-          {t("dashboard.refresh")}
-        </button>
-        <button className="btn btn-primary" onClick={onSaveDescriptions}>
-          {t("dashboard.save")}
-        </button>
+    <div className="space-y-6 fade-in-up">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h2 className="text-3xl font-bold mb-2">{title}</h2>
+          <p className="text-muted-foreground">Manage files for {title.toLowerCase()}.</p>
+        </div>
+        <div className="flex gap-2">
+          <label className="btn btn-outline cursor-pointer">
+            <i className="fas fa-cloud-upload-alt mr-2"></i> Upload New
+            <input type="file" accept="image/*" multiple className="hidden" onChange={onUpload} />
+          </label>
+          {showDescriptions && (
+            <button className="btn btn-primary" onClick={onSaveDescriptions}>
+              <i className="fas fa-save mr-2"></i> Save Descriptions
+            </button>
+          )}
+        </div>
       </div>
 
       {loading ? (
-        <p>Loading…</p>
+        <div className="flex justify-center p-20">
+          <i className="fas fa-circle-notch fa-spin text-4xl text-primary opacity-50"></i>
+        </div>
       ) : (
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {items.map((item, idx) => (
-            <li key={item.id} className="card p-0 overflow-hidden">
-              <img
-                src={item.url}
-                alt={item.name}
-                className="w-full h-40 object-cover"
-              />
-              <div className="p-3 space-y-2">
-                <div className="text-sm text-muted-foreground">{item.name}</div>
-                <textarea
-                  className="textarea"
-                  rows={2}
-                  placeholder="Description"
-                  value={descMap[item.id] || ""}
-                  onChange={(e) =>
-                    setDescMap((m) => ({ ...m, [item.id]: e.target.value }))
-                  }
-                />
-                <div className="flex items-center justify-between text-xs">
+            <div key={item.id} className="group relative bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="aspect-video bg-muted relative">
+                <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-[2px]">
                   <button
-                    className="btn btn-xs"
+                    className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     disabled={idx === 0}
-                    onClick={() =>
-                      onReorder([
-                        ...items.slice(0, idx - 1),
-                        items[idx],
-                        items[idx - 1],
-                        ...items.slice(idx + 1),
-                      ])
-                    }
+                    onClick={() => onReorder([...items.slice(0, idx - 1), items[idx], items[idx - 1], ...items.slice(idx + 1)])}
+                    title="Move Left"
                   >
-                    Move up
+                    <i className="fas fa-chevron-left"></i>
                   </button>
                   <button
-                    className="btn btn-xs"
+                    className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     disabled={idx === items.length - 1}
-                    onClick={() =>
-                      onReorder([
-                        ...items.slice(0, idx),
-                        items[idx + 1],
-                        items[idx],
-                        ...items.slice(idx + 2),
-                      ])
-                    }
+                    onClick={() => onReorder([...items.slice(0, idx), items[idx + 1], items[idx], ...items.slice(idx + 2)])}
+                    title="Move Right"
                   >
-                    Move down
+                    <i className="fas fa-chevron-right"></i>
                   </button>
                 </div>
               </div>
-            </li>
+              {showDescriptions && (
+                <div className="p-3">
+                  <div className="text-[10px] uppercase font-bold text-muted-foreground mb-1 tracking-wider">Description</div>
+                  <textarea
+                    className="textarea w-full text-sm resize-none bg-muted/30 focus:bg-background transition-colors min-h-[60px]"
+                    placeholder="Enter caption..."
+                    value={descMap[item.id] || ""}
+                    onChange={(e) => setDescMap((m) => ({ ...m, [item.id]: e.target.value }))}
+                  />
+                </div>
+              )}
+            </div>
           ))}
-        </ul>
+          {items.length === 0 && (
+            <div className="col-span-full py-20 text-center text-muted-foreground border-2 border-dashed border-border rounded-xl">
+              <i className="fas fa-folder-open text-4xl mb-4 opacity-30"></i>
+              <p>Folder is empty. Upload some images to get started.</p>
+            </div>
+          )}
+        </div>
       )}
     </div>
+  );
+}
+
+function ContentEditor({ currentLocale }) {
+  const [selectedLocale, setSelectedLocale] = useState(currentLocale);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [jsonString, setJsonString] = useState("");
+
+  useEffect(() => {
+    loadContent(selectedLocale);
+  }, [selectedLocale]);
+
+  async function loadContent(loc) {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/content?locale=${loc}`);
+      const json = await res.json();
+      setData(json.messages);
+      setJsonString(JSON.stringify(json.messages, null, 2));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSave() {
+    try {
+      const content = JSON.parse(jsonString);
+      const res = await fetch("/api/content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale: selectedLocale, content })
+      });
+      if (res.ok) {
+        alert("Saved content successfully!");
+        loadContent(selectedLocale);
+      } else {
+        alert("Failed to save content.");
+      }
+    } catch (e) {
+      alert("Invalid JSON. Please fix syntax errors.");
+    }
+  }
+
+  return (
+    <div className="space-y-6 fade-in-up">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h2 className="text-3xl font-bold mb-2">Content Editor</h2>
+          <p className="text-muted-foreground">Modify site text and translations for all supported languages.</p>
+        </div>
+        <button className="btn btn-primary" onClick={handleSave} disabled={loading}>
+          <i className="fas fa-save mr-2"></i> Save Changes
+        </button>
+      </div>
+
+      <div className="card p-0 bg-background/50 backdrop-blur-sm overflow-hidden border-none shadow-lg">
+        <div className="bg-muted/30 p-4 border-b border-border flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <i className="fas fa-globe text-primary"></i>
+            <select
+              className="bg-transparent font-medium outline-none cursor-pointer hover:text-primary transition-colors"
+              value={selectedLocale}
+              onChange={e => setSelectedLocale(e.target.value)}
+            >
+              {locales.map(l => (
+                <option className="bg-background" key={l} value={l}>{l.toUpperCase()} - {l}</option>
+              ))}
+            </select>
+          </div>
+          <div className="text-xs text-muted-foreground font-mono">messages/{selectedLocale}.json</div>
+        </div>
+
+        {loading ? (
+          <div className="flex justify-center p-20">
+            <i className="fas fa-circle-notch fa-spin text-4xl text-primary opacity-50"></i>
+          </div>
+        ) : (
+          <div className="relative">
+            <textarea
+              className="w-full h-[65vh] font-mono text-sm p-6 bg-card focus:outline-none resize-none leading-relaxed"
+              value={jsonString}
+              onChange={e => setJsonString(e.target.value)}
+              spellCheck={false}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ColorEditor() {
+  const [allVariables, setAllVariables] = useState({ light: {}, dark: {} });
+  const [mode, setMode] = useState("light"); // 'light' | 'dark'
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('/api/colors')
+      .then(r => r.json())
+      .then(data => {
+        if (data.variables) {
+          setAllVariables(data.variables);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  async function handleSave() {
+    const res = await fetch("/api/colors", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(allVariables)
+    });
+
+    if (res.ok) alert("Theme saved! Refresh to see changes.");
+    else alert("Failed to save theme.");
+  }
+
+  // Helper: Convert "background-color" -> "Background Color"
+  const formatName = (key) => {
+    return key
+      .replace(/-/g, ' ')
+      .replace(/([A-Z])/g, ' $1') // if camelCase
+      .replace(/^./, (str) => str.toUpperCase());
+  };
+
+  // Detect if valid color format we can preview
+  // Supports: "255 255 255", "255, 255, 255, 0.5", "rgb(...)", "rgba(...)", "#..."
+  const isColorValue = (val) => {
+    if (!val) return false;
+    const v = val.trim();
+    // Space separated rgb (Tailwind style sometimes)
+    if (/^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/.test(v)) return true;
+    // Comma separated rgb/rgba (Raw CSS vars)
+    // e.g. "200, 200, 200" or "200, 200, 200, 0.5"
+    if (/^(\d{1,3},\s*){2,3}\d{1,3}(\.?\d+)?$/.test(v)) return true;
+
+    // Standard css colors
+    if (v.startsWith("#")) return true;
+    if (v.startsWith("rgb")) return true;
+    return false;
+  };
+
+  // Robust converter for the <input type="color"> value
+  const toHexForPicker = (val) => {
+    const v = val.trim();
+
+    // Helper to match numbers
+    const getNumbers = (str) => str.match(/[\d\.]+/g)?.map(Number) || [0, 0, 0];
+
+    // 1. Handle space separated "255 255 255"
+    if (/^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/.test(v)) {
+      const [r, g, b] = getNumbers(v);
+      const hex = (x) => {
+        const h = Math.round(x || 0).toString(16);
+        return h.length === 1 ? "0" + h : h;
+      };
+      return `#${hex(r)}${hex(g)}${hex(b)}`;
+    }
+
+    // 2. Handle comma separated "255, 255, 255" or "255, 255, 255, 0.5"
+    if (v.includes(',')) {
+      const nums = getNumbers(v);
+      if (nums.length >= 3) {
+        const [r, g, b] = nums;
+        const hex = (x) => {
+          const h = Math.round(x || 0).toString(16);
+          return h.length === 1 ? "0" + h : h;
+        };
+        return `#${hex(r)}${hex(g)}${hex(b)}`;
+      }
+    }
+
+    // 3. Handle hex
+    if (v.startsWith("#")) {
+      // expand #ccc -> #cccccc
+      if (v.length === 4) {
+        return `#${v[1]}${v[1]}${v[2]}${v[2]}${v[3]}${v[3]}`;
+      }
+      return v.substring(0, 7); // ignores alpha hex for the picker part
+    }
+
+    // 4. Handle rgb/rgba
+    if (v.startsWith("rgb")) {
+      const nums = getNumbers(v);
+      if (nums.length >= 3) {
+        const [r, g, b] = nums;
+        const hex = (x) => {
+          const h = Math.round(x || 0).toString(16);
+          return h.length === 1 ? "0" + h : h;
+        };
+        return `#${hex(r)}${hex(g)}${hex(b)}`;
+      }
+    }
+
+    return "#000000";
+  };
+
+  const handlePickerChange = (key, hexValue, originalValue) => {
+    const v = originalValue.trim();
+
+    // hex -> rgb numbers
+    const r = parseInt(hexValue.slice(1, 3), 16);
+    const g = parseInt(hexValue.slice(3, 5), 16);
+    const b = parseInt(hexValue.slice(5, 7), 16);
+
+    let newValue = hexValue;
+
+    // Case 1: Space separated "255 255 255"
+    if (/^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/.test(v)) {
+      newValue = `${r} ${g} ${b}`;
+    }
+    // Case 2: Comma separated "255, 255, 255" or "255, 255, 255, 0.5"
+    else if (/^(\d{1,3},\s*){2,3}\d{1,3}(\.?\d+)?$/.test(v)) {
+      // extract old alpha if present
+      const nums = v.match(/[\d\.]+/g);
+      const alpha = (nums && nums.length > 3) ? nums[3] : null;
+
+      if (alpha) {
+        newValue = `${r}, ${g}, ${b}, ${alpha}`;
+      } else {
+        newValue = `${r}, ${g}, ${b}`;
+      }
+    }
+    // Case 3: rgba(...) - Try to preserve alpha
+    else if (v.startsWith("rgb")) {
+      const nums = v.match(/[\d\.]+/g);
+      const alpha = (nums && nums.length > 3) ? nums[3] : null;
+
+      if (v.startsWith("rgba") || alpha) {
+        newValue = `rgba(${r}, ${g}, ${b}, ${alpha || 1})`;
+      } else {
+        newValue = `rgb(${r}, ${g}, ${b})`;
+      }
+    }
+
+    updateVar(key, newValue);
+  };
+
+  // Normalize background style string
+  const getBackgroundStyle = (val) => {
+    if (!val) return 'transparent';
+    const v = val.trim();
+    // If it's just numbers, wrap it
+    if (/^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/.test(v)) {
+      return `rgb(${v.split(' ').join(',')})`;
+    }
+    if (/^(\d{1,3},\s*){2,3}\d{1,3}(\.?\d+)?$/.test(v)) {
+      return `rgba(${v})`;
+    }
+    return v;
+  };
+
+  const updateVar = (key, val) => {
+    setAllVariables(prev => ({
+      ...prev,
+      [mode]: {
+        ...prev[mode],
+        [key]: val
+      }
+    }));
+  };
+
+  // Calculate effective variables for display
+  // Light Mode: just light vars
+  // Dark Mode: Unique union of keys from Light and Dark. 
+  //            Value is Dark if present, else Light (inherited).
+  const lightVars = allVariables.light || {};
+  const darkVars = allVariables.dark || {};
+
+  let displayKeys = [];
+  if (mode === 'light') {
+    displayKeys = Object.keys(lightVars);
+  } else {
+    const allKeys = new Set([...Object.keys(lightVars), ...Object.keys(darkVars)]);
+    displayKeys = Array.from(allKeys);
+  }
+
+  // FILTER: Remove references (containing 'var(')
+  displayKeys = displayKeys.filter(k => {
+    // check value in current mode
+    let val = "";
+    if (mode === 'light') val = lightVars[k];
+    else val = darkVars[k] !== undefined ? darkVars[k] : lightVars[k];
+
+    // If not found (shouldn't happen), skip
+    if (!val) return false;
+
+    return !val.includes("var(");
+  });
+
+  const handleAlphaChange = (key, newAlpha, originalValue) => {
+    const v = originalValue.trim();
+    let r, g, b;
+
+    // Extract RGB
+    // Space sep
+    if (/^\d{1,3}\s+\d{1,3}\s+\d{1,3}$/.test(v)) {
+      [r, g, b] = v.split(/\s+/);
+    }
+    // Comma sep
+    else if (v.includes(',')) {
+      const nums = v.match(/[\d\.]+/g) || [];
+      r = nums[0]; g = nums[1]; b = nums[2];
+    } else {
+      // Fallback default
+      r = 0; g = 0; b = 0;
+    }
+
+    // If alpha is "1", we can optionally revert to simplistic RGB if we want, 
+    // but explicit RGBA "255, 255, 255, 1" is fine too.
+    // Let's stick to our "Comma Separated" standard for alpha values
+    updateVar(key, `${r}, ${g}, ${b}, ${newAlpha}`);
+  };
+
+  // Helper to extract current alpha
+  const getAlpha = (val) => {
+    if (!val) return 1;
+    const v = val.trim();
+    const nums = v.match(/[\d\.]+/g);
+    // If 4th number exists, that's alpha. Else 1.
+    if (nums && nums.length >= 4) return parseFloat(nums[3]);
+    return 1;
+  };
+
+
+  return (
+    <div className="space-y-6 fade-in-up">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h2 className="text-3xl font-bold mb-2">Theme Editor</h2>
+          <p className="text-muted-foreground">Customize global styles for Light and Dark modes.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="bg-muted p-1 rounded-lg flex text-sm font-medium">
+            <button
+              className={`px-3 py-1.5 rounded-md transition-all ${mode === 'light' ? 'bg-white text-black shadow' : 'text-muted-foreground hover:text-foreground'}`}
+              onClick={() => setMode('light')}
+            >
+              <i className="fas fa-sun mr-2"></i> Light
+            </button>
+            <button
+              className={`px-3 py-1.5 rounded-md transition-all ${mode === 'dark' ? 'bg-black text-white shadow' : 'text-muted-foreground hover:text-foreground'}`}
+              onClick={() => setMode('dark')}
+            >
+              <i className="fas fa-moon mr-2"></i> Dark
+            </button>
+          </div>
+          <button className="btn btn-primary" onClick={handleSave}>
+            <i className="fas fa-save mr-2"></i> Save Theme
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="p-12 text-center">Loading variables...</div>
+      ) : (
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {displayKeys.map(key => {
+            // Determine current value
+            let val = "";
+            let isInherited = false;
+
+            if (mode === 'light') {
+              val = lightVars[key] || "";
+            } else {
+              // Dark mode logic
+              if (darkVars[key] !== undefined) {
+                val = darkVars[key];
+              } else {
+                val = lightVars[key] || "";
+                isInherited = true;
+              }
+            }
+
+            const isColor = isColorValue(val);
+            const currentAlpha = getAlpha(val);
+
+            return (
+              <div key={key} className={`card p-0 overflow-hidden group border transition-all ${isInherited ? 'opacity-80' : ''} hover:border-primary hover:opacity-100`}>
+                {isColor ? (
+                  // Color Card
+                  <div className="flex flex-col h-full">
+                    {/* Checkered Background Wrapper */}
+                    <div className="h-28 w-full relative cursor-pointer shadow-inner shadow-xl bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIi8+CjxwYXRoIGQ9Ik0wIDBMMCA0TDQgNEw0IDBaTTQgNEw0IDhMOCA4TDggNFoiIGZpbGw9IiNjY2MiLz4KPC9zdmc+')]">
+                      <div
+                        className="absolute inset-0 transition-colors"
+                        style={{ backgroundColor: getBackgroundStyle(val) }}
+                      />
+                      <input
+                        type="color"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        value={toHexForPicker(val)}
+                        onChange={(e) => handlePickerChange(key, e.target.value, val)}
+                      />
+                      {isInherited && (
+                        <div className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-2 py-0.5 rounded backdrop-blur-sm">
+                          Inherited
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-4 flex-1 flex flex-col gap-3">
+                      {/* Header */}
+                      <div>
+                        <div className="font-semibold capitalize text-sm mb-0.5">{formatName(key)}</div>
+                        <div className="font-mono text-[10px] text-muted-foreground break-all">--{key}</div>
+                      </div>
+
+                      {/* Controls */}
+                      <div className="space-y-3 mt-auto">
+                        {/* Opacity Slider */}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] uppercase font-bold text-muted-foreground w-12">Opacity</span>
+                          <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={currentAlpha}
+                            onChange={(e) => handleAlphaChange(key, e.target.value, val)}
+                            className="range range-xs range-primary flex-1"
+                          />
+                          <span className="text-[10px] font-mono w-8 text-right">{(currentAlpha * 100).toFixed(0)}%</span>
+                        </div>
+
+                        {/* Raw Value */}
+                        <input
+                          className="input w-full px-2 py-1 text-[11px] font-mono bg-muted/30 h-8"
+                          value={val}
+                          onChange={e => updateVar(key, e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // Text Card
+                  <div className="p-5 flex flex-col h-full gap-3">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <div className="font-semibold capitalize text-sm">{formatName(key)}</div>
+                        {isInherited && (
+                          <span className="text-[10px] bg-muted px-1.5 py-0.5 rounded text-muted-foreground">Inherited</span>
+                        )}
+                      </div>
+                      <div className="font-mono text-xs text-muted-foreground mt-0.5">--{key}</div>
+                    </div>
+                    <div className="mt-auto">
+                      <input
+                        className="input w-full text-sm font-mono"
+                        value={val}
+                        onChange={e => updateVar(key, e.target.value)}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div >
+      )}
+
+      {
+        displayKeys.length === 0 && !loading && (
+          <div className="p-12 text-center text-muted-foreground border-2 border-dashed border-border rounded-xl">
+            No variables found.
+          </div>
+        )
+      }
+
+      <div className="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl text-sm text-blue-600 dark:text-blue-400">
+        <i className="fas fa-info-circle mt-0.5"></i>
+        <div className="space-y-1">
+          <p><strong>Tips:</strong></p>
+          <ul className="list-disc list-inside space-y-1 opacity-90">
+            <li>In <strong>Dark Mode</strong>, variables labeled "Inherited" use the value from Light Mode.</li>
+            <li>Editing an inherited variable in Dark Mode will create a specific override for Dark Mode.</li>
+            <li>Click the color preview to open the system color picker.</li>
+          </ul>
+        </div>
+      </div>
+    </div >
   );
 }

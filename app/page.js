@@ -25,7 +25,6 @@ export default function HomePage() {
   return (
     <>
       <StarBackground />
-
       <div className="container mx-auto px-4 py-10">
         <section className="mb-12">
           <div className="pt-40 pl-4">
@@ -35,7 +34,7 @@ export default function HomePage() {
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">
               {t("hero.title2")}
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground pl-4 w-100 skew-description">
+            <p className="mt-4 text-lg text-muted-foreground pl-6 w-100 skew-description whitespace-pre-wrap">
               {spanify(t("hero.subtitle"))}
             </p>
             <div className="mt-20 flex flex-wrap gap-3 pl-32 text-xl font-bold">
