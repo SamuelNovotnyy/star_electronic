@@ -36,7 +36,25 @@
     "title": "Зв'яжіться з нами",
     "intro": "Відповімо протягом одного робочого дня.",
     "send": "Надіслати повідомлення",
-    "sending": "Надсилання…"
+    "sending": "Надсилання…",
+    "getInTouch": "Зв'яжіться з нами",
+    "description": "Ми будемо раді вас почути. Будь ласка, заповніть цю форму або надішліть нам електронного листа.",
+    "office": "Наш офіс",
+    "email": "Електронна пошта",
+    "phone": "Телефон",
+    "name": "Ім'я",
+    "company": "Компанія",
+    "subject": "Тема",
+    "message": "Повідомлення",
+    "success": "Повідомлення надіслано. Ми зв'яжемося з вами найближчим часом.",
+    "placeholders": {
+      "name": "John Doe",
+      "company": "Star Inc.",
+      "email": "john@example.com",
+      "phone": "+1 (555) 000-0000",
+      "subject": "Як ми можемо допомогти?",
+      "message": "Розкажіть нам про ваш проєкт..."
+    }
   },
   "dashboard": {
     "title": "Адмін",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Ми постачаємо надійні IoT компоненти та забезпечуємо швидкий сервіс для розумних будинків та бізнесу з 2010 року."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Швидкі посилання",
-      "home": "Головна",
-      "gallery": "Галерея",
-      "contact": "Контакти"
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
+      "contact": "Contact"
     },
     "contact": {
-      "title": "Зв'яжіться з нами",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Слідкуйте за нами"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Всі права захищені."
+    "rights": "Star Electronic. All rights reserved."
   }
 }

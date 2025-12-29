@@ -35,8 +35,26 @@
   "contact": {
     "title": "Kontaktieren Sie uns",
     "intro": "Wir melden uns innerhalb eines Werktags.",
+    "getInTouch": "Kontakt aufnehmen",
+    "description": "Wir freuen uns, von Ihnen zu hören. Bitte füllen Sie dieses Formular aus oder senden Sie uns eine E-Mail.",
+    "office": "Unser Büro",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "name": "Name",
+    "company": "Firma",
+    "subject": "Betreff",
+    "message": "Nachricht",
     "send": "Nachricht senden",
-    "sending": "Senden…"
+    "sending": "Senden…",
+    "success": "Nachricht gesendet. Wir melden uns in Kürze.",
+    "placeholders": {
+      "name": "Max Mustermann",
+      "company": "Star GmbH",
+      "email": "max@example.com",
+      "phone": "+49 123 456789",
+      "subject": "Wie können wir helfen?",
+      "message": "Erzählen Sie uns von Ihrem Projekt..."
+    }
   },
   "dashboard": {
     "title": "Admin",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Wir liefern zuverlässige IoT-Komponenten und reaktionsschnellen Service für Smart Homes und Unternehmen seit 2010."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Schnelllinks",
-      "home": "Startseite",
-      "gallery": "Galerie",
-      "contact": "Kontakt"
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
+      "contact": "Contact"
     },
     "contact": {
-      "title": "Kontaktieren Sie uns",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Folgen Sie uns"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Alle Rechte vorbehalten."
+    "rights": "Star Electronic. All rights reserved."
   }
 }

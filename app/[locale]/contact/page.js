@@ -1,5 +1,4 @@
 /** @format */
-import StarBackground from "@/components/StarBackground";
 import ContactForm from "../../../components/ContactForm";
 import { getMessages } from "../../../lib/i18n";
 import RedBorderBottom from "@/components/RedBorderBottom";

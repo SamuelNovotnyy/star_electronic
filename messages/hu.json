@@ -35,8 +35,26 @@
   "contact": {
     "title": "Lépjen kapcsolatba velünk",
     "intro": "Egy munkanapon belül válaszolunk.",
+    "getInTouch": "Lépjen kapcsolatba velünk",
+    "description": "Örömmel hallanánk Önről. Kérjük, töltse ki ezt az űrlapot, vagy küldjön e-mailt.",
+    "office": "Irodánk",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "name": "Név",
+    "company": "Cég",
+    "subject": "Tárgy",
+    "message": "Üzenet",
     "send": "Üzenet küldése",
-    "sending": "Küldés…"
+    "sending": "Küldés…",
+    "success": "Üzenet elküldve. Hamarosan jelentkezünk.",
+    "placeholders": {
+      "name": "Kovács János",
+      "company": "Star Kft.",
+      "email": "janos@example.com",
+      "phone": "+36 1 234 5678",
+      "subject": "Miben segíthetünk?",
+      "message": "Meséljen a projektjéről..."
+    }
   },
   "dashboard": {
     "title": "Admin",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Megbízható IoT alkatrészek és gyors szerviz okosotthonok és vállalkozások számára 2010 óta."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Gyors linkek",
-      "home": "Főoldal",
-      "gallery": "Galéria",
-      "contact": "Kapcsolat"
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
+      "contact": "Contact"
     },
     "contact": {
-      "title": "Lépjen kapcsolatba velünk",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Kövessen minket"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Minden jog fenntartva."
+    "rights": "Star Electronic. All rights reserved."
   }
 }

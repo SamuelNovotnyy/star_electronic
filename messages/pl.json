@@ -35,8 +35,26 @@
   "contact": {
     "title": "Skontaktuj się z nami",
     "intro": "Odpowiemy w ciągu jednego dnia roboczego.",
+    "getInTouch": "Skontaktuj się",
+    "description": "Chcielibyśmy usłyszeć od Ciebie. Wypełnij ten formularz lub wyślij nam e-mail.",
+    "office": "Nasze biuro",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "name": "Imię",
+    "company": "Firma",
+    "subject": "Temat",
+    "message": "Wiadomość",
     "send": "Wyślij wiadomość",
-    "sending": "Wysyłam…"
+    "sending": "Wysyłam…",
+    "success": "Wiadomość wysłana. Wkrótce się odezwiemy.",
+    "placeholders": {
+      "name": "Jan Kowalski",
+      "company": "Star Sp. z o.o.",
+      "email": "jan@example.com",
+      "phone": "+48 123 456 789",
+      "subject": "Jak możemy pomóc?",
+      "message": "Opowiedz nam o swoim projekcie..."
+    }
   },
   "dashboard": {
     "title": "Panel",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Dostarczamy niezawodne komponenty IoT i szybki serwis dla inteligentnych domów i firm od 2010 roku."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Szybkie linki",
-      "home": "Strona główna",
-      "gallery": "Galeria",
-      "contact": "Kontakt"
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
+      "contact": "Contact"
     },
     "contact": {
-      "title": "Skontaktuj się z nami",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Obserwuj nas"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Wszelkie prawa zastrzeżone."
+    "rights": "Star Electronic. All rights reserved."
   }
 }

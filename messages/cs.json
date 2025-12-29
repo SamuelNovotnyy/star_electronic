@@ -35,8 +35,26 @@
   "contact": {
     "title": "Kontaktujte nás",
     "intro": "Ozveme se do jednoho pracovního dne.",
+    "getInTouch": "Napište nám",
+    "description": "Rádi o vás uslyšíme. Vyplňte prosím tento formulář nebo nám pošlete e-mail.",
+    "office": "Naše kancelář",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "name": "Jméno",
+    "company": "Společnost",
+    "subject": "Předmět",
+    "message": "Zpráva",
     "send": "Odeslat zprávu",
-    "sending": "Odesílám…"
+    "sending": "Odesílám…",
+    "success": "Zpráva odeslána. Brzy se vám ozveme.",
+    "placeholders": {
+      "name": "Jan Novák",
+      "company": "Star s.r.o.",
+      "email": "jan@example.com",
+      "phone": "+420 123 456 789",
+      "subject": "Jak vám můžeme pomoci?",
+      "message": "Řekněte nám o svém projektu..."
+    }
   },
   "dashboard": {
     "title": "Správa",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Dodáváme spolehlivé IoT komponenty a rychlý servis pro chytré domácnosti a firmy od roku 2010."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Rychlé odkazy",
-      "home": "Domů",
-      "gallery": "Galerie",
-      "contact": "Kontakt"
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
+      "contact": "Contact"
     },
     "contact": {
-      "title": "Kontaktujte nás",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Sledujte nás"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Všechna práva vyhrazena."
+    "rights": "Star Electronic. All rights reserved."
   }
 }

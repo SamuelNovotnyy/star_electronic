@@ -33,8 +33,26 @@
   "contact": {
     "title": "Contact us",
     "intro": "Tell us about your needs and we’ll respond within one business day.",
+    "getInTouch": "Get in Touch",
+    "description": "We'd love to hear from you. Please fill out this form or shoot us an email.",
+    "office": "Our Office",
+    "email": "Email",
+    "phone": "Phone",
+    "name": "Name",
+    "company": "Company",
+    "subject": "Subject",
+    "message": "Message",
     "send": "Send message",
-    "sending": "Sending…"
+    "sending": "Sending…",
+    "success": "Message sent. We'll get back shortly.",
+    "placeholders": {
+      "name": "John Doe",
+      "company": "Star Inc.",
+      "email": "john@example.com",
+      "phone": "+1 (555) 000-0000",
+      "subject": "How can we help?",
+      "message": "Tell us about your project..."
+    }
   },
   "dashboard": {
     "title": "Dashboard",

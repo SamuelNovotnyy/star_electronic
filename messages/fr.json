@@ -35,8 +35,26 @@
   "contact": {
     "title": "Contactez-nous",
     "intro": "Réponse sous un jour ouvré.",
+    "getInTouch": "Entrer en contact",
+    "description": "Nous aimerions avoir de vos nouvelles. Veuillez remplir ce formulaire ou nous envoyer un e-mail.",
+    "office": "Notre bureau",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "name": "Nom",
+    "company": "Société",
+    "subject": "Sujet",
+    "message": "Message",
     "send": "Envoyer le message",
-    "sending": "Envoi…"
+    "sending": "Envoi…",
+    "success": "Message envoyé. Nous vous répondrons sous peu.",
+    "placeholders": {
+      "name": "Jean Dupont",
+      "company": "Star SAS",
+      "email": "jean@example.com",
+      "phone": "+33 1 23 45 67 89",
+      "subject": "Comment pouvons-nous aider ?",
+      "message": "Parlez-nous de votre projet..."
+    }
   },
   "dashboard": {
     "title": "Admin",
@@ -53,23 +71,21 @@
   "footer": {
     "brand": {
       "title": "Star Electronic",
-      "desc": "Fourniture de composants IoT fiables et service réactif pour les maisons intelligentes et les entreprises depuis 2010."
+      "desc": "Delivering reliable IoT components and responsive service for smart homes and businesses since 2010."
     },
     "quickLinks": {
-      "title": "Liens rapides",
-      "home": "Accueil",
-      "gallery": "Galerie",
+      "title": "Quick Links",
+      "home": "Home",
+      "gallery": "Gallery",
       "contact": "Contact"
     },
     "contact": {
-      "title": "Contactez-nous",
-      "address": "123 Star Street, Tech City, TC 90210",
-      "email": "info@star-electronic.example",
-      "phone": "+1 (555) 123-4567"
+      "title": "Contact Us",
+      "address": "123 Star Street, Tech City, TC 90210"
     },
     "follow": {
-      "title": "Suivez-nous"
+      "title": "Follow Us"
     },
-    "copyright": "© {year} Star Electronic. Tous droits réservés."
+    "rights": "Star Electronic. All rights reserved."
   }
 }
