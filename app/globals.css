@@ -141,6 +141,9 @@ select.input:focus {
 .bg-background {
   background-color: var(--bg);
 }
+.bg-foreground {
+  background-color: var(--fg);
+}
 .text-foreground {
   color: var(--fg);
 }
@@ -155,6 +158,15 @@ select.input:focus {
 }
 .text-primary {
   color: var(--primary-color);
+}
+.ring-primary {
+  --tw-ring-color: var(--primary-color);
+}
+.ring-background {
+  --tw-ring-color: var(--bg);
+}
+.ring-foreground {
+  --tw-ring-color: var(--fg);
 }
 
 @keyframes pulse {
