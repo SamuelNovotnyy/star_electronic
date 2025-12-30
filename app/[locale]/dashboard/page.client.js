@@ -3,8 +3,9 @@
 'use client';
 
 import StarBackground from '@/components/StarBackground';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { locales } from '../../../i18n.config';
+import EmailEditor from 'react-email-editor';
 
 const FOLDERS = [
   { key: 'star_electronic_carousel', label: 'Carousel' },
@@ -962,12 +963,19 @@ function ColorEditor() {
 }
 
 function EmailSettings({ type }) {
+  const emailEditorRef = useRef(null);
   const [settings, setSettings] = useState({
     emails: {
       ownerEnabled: true,
       userEnabled: true,
       ownerTemplate: '',
       userTemplate: '',
+      ownerTemplateJson: null,
+      userTemplateJson: null,
+      ownerTemplateHtml: '',
+      userTemplateHtml: '',
+      ownerSubject: '',
+      userSubject: '',
     },
   });
   const [loading, setLoading] = useState(true);
@@ -976,42 +984,18 @@ function EmailSettings({ type }) {
   const isOwner = type === 'owner';
   const enabledKey = isOwner ? 'ownerEnabled' : 'userEnabled';
   const templateKey = isOwner ? 'ownerTemplate' : 'userTemplate';
+  const jsonKey = isOwner ? 'ownerTemplateJson' : 'userTemplateJson';
+  const htmlKey = isOwner ? 'ownerTemplateHtml' : 'userTemplateHtml';
+  const subjectKey = isOwner ? 'ownerSubject' : 'userSubject';
+
   const title = isOwner ? 'Store Inquiry Emails' : 'Confirmation User Emails';
   const description = isOwner
     ? 'These emails are sent to YOU when someone fills out the contact form.'
     : 'These emails are sent to the CUSTOMER to confirm their request was received.';
 
-  const defaultTemplate = isOwner
-    ? `─────────────────
-📧 New Website Inquiry! 📧
-─────────────────
-
-Date:    {{date}}
-From:    {{name}}
-Email:   {{email}}
-Phone:   {{phone}}
-Company: {{company}}
-Subject: {{subject}}
-
-─────────────────
-Message:
-─────────────────
-{{message}}`
-    : `─────────────────
-✅ Star Electronic: Request Received!
-─────────────────
-
-Hello {{name}},
-
-Thank you for contacting Star Electronic!
-We have received your request regarding "{{subject}}" and our team is now processing it.
-
-You will receive a reply as soon as possible. If you have any further questions, simply reply to this email.
-
-Best regards,
-The Star Electronic Team
-
-Date received: {{date}}`;
+  const defaultSubject = isOwner
+    ? '[Contact] {{subject}}'
+    : 'We received your request at Star Electronic';
 
   useEffect(() => {
     fetch('/api/settings')
@@ -1028,15 +1012,47 @@ Date received: {{date}}`;
       });
   }, []);
 
+  const onLoad = () => {
+    // Load the design if it exists
+    const design = settings.emails?.[jsonKey];
+    if (design && emailEditorRef.current) {
+      emailEditorRef.current.editor.loadDesign(design);
+    }
+  };
+
   async function save() {
     setSaving(true);
-    await fetch('/api/settings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(settings),
-    });
-    setSaving(false);
-    alert('Settings saved!');
+
+    // Export HTML and JSON from the editor
+    if (emailEditorRef.current) {
+      emailEditorRef.current.editor.exportHtml(async data => {
+        const { design, html } = data;
+
+        const newSettings = {
+          ...settings,
+          emails: {
+            ...settings.emails,
+            [jsonKey]: design,
+            [htmlKey]: html,
+            // We can keep the old template key as a fallback or just ignore it
+            [templateKey]: html,
+          },
+        };
+
+        await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newSettings),
+        });
+
+        setSettings(newSettings);
+        setSaving(false);
+        alert('Settings saved!');
+      });
+    } else {
+      // Fallback if editor not loaded (shouldn't happen)
+      setSaving(false);
+    }
   }
 
   const isEnabled = settings.emails?.[enabledKey] !== false;
@@ -1100,34 +1116,60 @@ Date received: {{date}}`;
               })
             }
           />
-          <div className="w-11 h-6 rounded-full transition-300 peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[var(--fg)] after:duration-300 after:rounded-full after:h-5 after:w-5 after:transition-all ring-3 ring-foreground"></div>
+          <div className="w-11 h-6 bg-[rgb(var(--border))] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[rgb(var(--background))] after:border-[rgb(var(--border))] after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary ring-2 ring-[rgb(var(--border))]"></div>
         </label>
       </div>
 
       <div className="bg-card border border-border rounded-xl p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium mb-2">
-            Email Template
+            Email Subject
+          </label>
+          <p className="text-xs text-muted-foreground mb-2">
+            {isOwner
+              ? 'Available variables: {{name}}, {{subject}}'
+              : 'Available variables: {{name}}, {{subject}}'}
+          </p>
+          <input
+            type="text"
+            className="w-full p-3 rounded-lg bg-background border border-border focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+            value={
+              settings.emails?.[subjectKey] !== undefined
+                ? settings.emails[subjectKey]
+                : defaultSubject
+            }
+            onChange={e =>
+              setSettings({
+                ...settings,
+                emails: { ...settings.emails, [subjectKey]: e.target.value },
+              })
+            }
+            placeholder={defaultSubject}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Email Template Builder
           </label>
           <p className="text-xs text-muted-foreground mb-2">
             {isOwner
               ? 'Available variables: {{name}}, {{email}}, {{phone}}, {{company}}, {{subject}}, {{message}}, {{date}}'
               : 'Available variables: {{name}}, {{subject}}, {{date}}'}
           </p>
-          <textarea
-            className="w-full h-96 p-4 rounded-lg bg-background border border-border focus:ring-2 focus:ring-primary focus:border-transparent font-mono text-sm leading-relaxed"
-            value={settings.emails?.[templateKey] || defaultTemplate}
-            onChange={e =>
-              setSettings({
-                ...settings,
-                emails: { ...settings.emails, [templateKey]: e.target.value },
-              })
-            }
-            placeholder="Enter the email template..."
-          />
-          <p className="text-xs text-muted-foreground mt-2">
-            * If you leave this empty, the default template will be used.
-          </p>
+
+          <div className="border border-border rounded-lg overflow-hidden h-[800px]">
+            <EmailEditor
+              ref={emailEditorRef}
+              onLoad={onLoad}
+              minHeight="800px"
+              options={{
+                appearance: {
+                  theme: 'modern_light',
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

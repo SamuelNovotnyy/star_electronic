@@ -34,33 +34,50 @@ export async function POST(req) {
 
       // Send email to business
       if (settings.emails?.ownerEnabled !== false) {
+        const subjectTemplate =
+          settings.emails?.ownerSubject || `[Contact] {{subject}}`;
+        const finalSubject = subjectTemplate
+          .replace(/{{name}}/g, name || '')
+          .replace(/{{subject}}/g, subject || '');
+
         await transporter.sendMail({
           from: `Star Electronic Website <${process.env.SMTP_USER}>`,
           to,
           replyTo: email,
-          subject: `[Contact] ${subject}`,
-          text: formatter.formatContactEmail({
+          subject: finalSubject,
+          html: formatter.formatContactEmail({
             name,
             email,
             phone,
             company,
             subject,
             message,
-            template: settings.emails?.ownerTemplate,
+            template:
+              settings.emails?.ownerTemplateHtml ||
+              settings.emails?.ownerTemplate,
           }),
         });
       }
 
       // Send confirmation email to user
       if (settings.emails?.userEnabled !== false) {
+        const subjectTemplate =
+          settings.emails?.userSubject ||
+          `We received your request at Star Electronic`;
+        const finalSubject = subjectTemplate
+          .replace(/{{name}}/g, name || '')
+          .replace(/{{subject}}/g, subject || '');
+
         await transporter.sendMail({
           from: `Star Electronic <${process.env.SMTP_USER}>`,
           to: email,
-          subject: `We received your request at Star Electronic`,
-          text: formatter.formatConfirmationEmail({
+          subject: finalSubject,
+          html: formatter.formatConfirmationEmail({
             name,
             subject,
-            template: settings.emails?.userTemplate,
+            template:
+              settings.emails?.userTemplateHtml ||
+              settings.emails?.userTemplate,
           }),
         });
       }

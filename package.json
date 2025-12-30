@@ -14,7 +14,8 @@
     "next": "15.5.4",
     "nodemailer": "^6.9.14",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-email-editor": "^1.7.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
