@@ -67,12 +67,27 @@ export default function DashboardPage() {
   async function onUpload(e) {
     const files = e.target.files;
     if (!files?.length) return;
-    const form = new FormData();
-    [...files].forEach(f => form.append('files', f));
-    form.append('folder', folder);
-    await fetch('/api/media/upload', { method: 'POST', body: form });
-    e.target.value = '';
-    refresh();
+
+    setLoading(true); // Show loading state immediately
+    try {
+      const form = new FormData();
+      [...files].forEach(f => form.append('files', f));
+      form.append('folder', folder);
+
+      const res = await fetch('/api/media/upload', {
+        method: 'POST',
+        body: form,
+      });
+      if (!res.ok) throw new Error('Upload failed');
+
+      e.target.value = '';
+      // Wait a short moment for Cloudinary to index/process if needed, though Admin API is fast
+      await new Promise(r => setTimeout(r, 1000));
+      await refresh();
+    } catch (err) {
+      alert('Upload failed: ' + err.message);
+      setLoading(false);
+    }
   }
 
   async function onSaveDescriptions() {
