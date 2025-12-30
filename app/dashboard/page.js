@@ -1,19 +1,23 @@
 /** @format */
 /* eslint-disable @next/next/no-img-element */
-"use client";
+'use client';
 
-import StarBackground from "@/components/StarBackground";
-import { useEffect, useState } from "react";
+import StarBackground from '@/components/StarBackground';
+import { useEffect, useState } from 'react';
 
 const FOLDERS = [
-  { key: "star_electronic_carousel", label: "Carousel" },
-  { key: "star_electronic_gallery", label: "Gallery" },
+  { key: 'star_electronic_carousel', label: 'Carousel' },
+  { key: 'star_electronic_gallery', label: 'Gallery' },
 ];
 
 export default function DashboardPage() {
   const [authed, setAuthed] = useState(true);
 
   const [deletingItem, setDeletingItem] = useState(null);
+  const [folder, setFolder] = useState(FOLDERS[0].key);
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [descMap, setDescMap] = useState({});
 
   useEffect(() => {
     if (!authed) return;
@@ -31,7 +35,7 @@ export default function DashboardPage() {
       setItems(data.items || []);
       setDescMap(
         Object.fromEntries(
-          (data.items || []).map((i) => [i.id, i.description || ""])
+          (data.items || []).map(i => [i.id, i.description || ''])
         )
       );
     } finally {
@@ -40,22 +44,22 @@ export default function DashboardPage() {
   }
 
   function promptKey() {
-    const k = window.prompt("Enter access key");
+    const k = window.prompt('Enter access key');
     if (!k) return;
-    fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key: k }),
     })
-      .then((r) => (r.ok ? setAuthed(true) : alert("Invalid key")))
-      .catch(() => alert("Error"));
+      .then(r => (r.ok ? setAuthed(true) : alert('Invalid key')))
+      .catch(() => alert('Error'));
   }
 
   async function onReorder(newOrder) {
-    await fetch("/api/media/reorder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ folder, order: newOrder.map((i) => i.id) }),
+    await fetch('/api/media/reorder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folder, order: newOrder.map(i => i.id) }),
     });
     refresh();
   }
@@ -64,17 +68,17 @@ export default function DashboardPage() {
     const files = e.target.files;
     if (!files?.length) return;
     const form = new FormData();
-    [...files].forEach((f) => form.append("files", f));
-    form.append("folder", folder);
-    await fetch("/api/media/upload", { method: "POST", body: form });
-    e.target.value = "";
+    [...files].forEach(f => form.append('files', f));
+    form.append('folder', folder);
+    await fetch('/api/media/upload', { method: 'POST', body: form });
+    e.target.value = '';
     refresh();
   }
 
   async function onSaveDescriptions() {
-    await fetch("/api/media/descriptions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    await fetch('/api/media/descriptions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ folder, descriptions: descMap }),
     });
     refresh();
@@ -83,15 +87,15 @@ export default function DashboardPage() {
   async function onConfirmDelete() {
     if (!deletingItem) return;
     try {
-      await fetch("/api/media/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      await fetch('/api/media/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ folder, id: deletingItem.id }),
       });
       setDeletingItem(null);
       refresh();
     } catch (e) {
-      alert("Failed to delete item: " + e.message);
+      alert('Failed to delete item: ' + e.message);
     }
   }
 
@@ -118,9 +122,9 @@ export default function DashboardPage() {
           <select
             className="input w-auto"
             value={folder}
-            onChange={(e) => setFolder(e.target.value)}
+            onChange={e => setFolder(e.target.value)}
           >
-            {FOLDERS.map((f) => (
+            {FOLDERS.map(f => (
               <option key={f.key} value={f.key}>
                 {f.label}
               </option>
@@ -149,7 +153,10 @@ export default function DashboardPage() {
         ) : (
           <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {items.map((item, idx) => (
-              <li key={item.id} className="card p-0 overflow-hidden relative group">
+              <li
+                key={item.id}
+                className="card p-0 overflow-hidden relative group"
+              >
                 <button
                   className="absolute top-2 right-2 btn btn-xs btn-circle btn-error opacity-0 group-hover:opacity-100 transition-opacity z-10"
                   onClick={() => setDeletingItem(item)}
@@ -163,16 +170,19 @@ export default function DashboardPage() {
                   className="w-full h-40 object-cover"
                 />
                 <div className="p-3 space-y-2">
-                  <div className="text-sm text-muted-foreground truncate" title={item.name}>
+                  <div
+                    className="text-sm text-muted-foreground truncate"
+                    title={item.name}
+                  >
                     {item.name}
                   </div>
                   <textarea
                     className="textarea w-full"
                     rows={2}
                     placeholder="Description"
-                    value={descMap[item.id] || ""}
-                    onChange={(e) =>
-                      setDescMap((m) => ({ ...m, [item.id]: e.target.value }))
+                    value={descMap[item.id] || ''}
+                    onChange={e =>
+                      setDescMap(m => ({ ...m, [item.id]: e.target.value }))
                     }
                   />
                   <div className="flex items-center justify-between text-xs">
@@ -238,4 +248,3 @@ export default function DashboardPage() {
     </>
   );
 }
-

@@ -947,8 +947,8 @@ function ColorEditor() {
           </p>
           <ul className="list-disc list-inside space-y-1 opacity-90">
             <li>
-              In <strong>Dark Mode</strong>, variables labeled "Inherited" use
-              the value from Light Mode.
+              In <strong>Dark Mode</strong>, variables labeled
+              &quot;Inherited&quot; use the value from Light Mode.
             </li>
             <li>
               Editing an inherited variable in Dark Mode will create a specific
