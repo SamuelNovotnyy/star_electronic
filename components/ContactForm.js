@@ -178,7 +178,7 @@ export default function ContactForm({ messages }) {
           </div>
 
           <button
-            className="btn btn-primary w-full py-3 text-lg font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+            className="btn btn-primary w-full py-3 text-lg font-medium shadow-md lg:hover:shadow-lg transform lg:hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98]"
             disabled={loading}
           >
             {loading

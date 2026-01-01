@@ -1,8 +1,8 @@
 /** @format */
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rasa:wght@400;500;600;700&display=swap");
-@import "@fortawesome/fontawesome-free/css/all.min.css";
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rasa:wght@400;500;600;700&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'tailwindcss';
 
 :root {
   --background: 255 255 255; /* white */
@@ -22,7 +22,6 @@
   --primary-color: rgb(var(--primary));
   --landingpage-shadow: rgba(var(--landing-page-shadow));
   --card-shadow-hover: rgba(var(--card-shadow-hover-color));
-
 }
 
 .dark :root,
@@ -40,9 +39,9 @@
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-    "Segoe UI Emoji";
+  font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji',
+    'Segoe UI Emoji';
 }
 
 .container {
@@ -64,32 +63,40 @@ body {
   color: #fff;
   border-color: var(--primary-color);
 }
-.btn-primary:hover {
-  background-color: var(--bg);
-  color: var(--primary-color);
+@media (hover: hover) {
+  .btn-primary:hover {
+    background-color: var(--bg);
+    color: var(--primary-color);
+  }
 }
 .btn-outline {
   color: var(--fg);
 }
-.btn-outline:hover {
-  background-color: var(--fg);
-  border-color: var(--fg);
-  color: var(--bg);
+@media (hover: hover) {
+  .btn-outline:hover {
+    background-color: var(--fg);
+    border-color: var(--fg);
+    color: var(--bg);
+  }
 }
 .btn-ghost {
   border-color: transparent;
   color: var(--fg);
 }
-.btn-ghost:hover {
-  background-color: var(--hvrd);
+@media (hover: hover) {
+  .btn-ghost:hover {
+    background-color: var(--hvrd);
+  }
 }
 .btn-link {
   border-color: transparent;
   color: var(--fg);
 }
-.btn-link:hover {
-  background-color: var(--hvrd);
-  color: var(--primary-color);
+@media (hover: hover) {
+  .btn-link:hover {
+    background-color: var(--hvrd);
+    color: var(--primary-color);
+  }
 }
 .btn-xs {
   padding: 0.25rem 0.5rem;
@@ -206,7 +213,7 @@ img {
   border-color: var(--primary-color);
 }
 .nav::after {
-  content: "";
+  content: '';
   position: absolute;
   pointer-events: none;
   top: 0;
@@ -223,21 +230,37 @@ img {
 }
 
 .skew-description {
-  transform: skew(17deg);
+  /* No skew on mobile for cleaner look */
 }
 
 .skew-description > span {
   display: inline-block;
-  transform: skew(-17deg);
 }
 
 .skew-hero {
-  transform: skew(-42deg);
+  /* No skew on mobile */
 }
 
 .skew-hero > span {
   display: inline-block;
-  transform: skew(42deg);
+}
+
+@media (min-width: 1024px) {
+  .skew-description {
+    transform: skew(17deg);
+  }
+
+  .skew-description > span {
+    transform: skew(-17deg);
+  }
+
+  .skew-hero {
+    transform: skew(-42deg);
+  }
+
+  .skew-hero > span {
+    transform: skew(42deg);
+  }
 }
 
 .footer {
@@ -261,15 +284,19 @@ img {
 }
 
 .top-shadow-middle {
---shadow-blur: 15px;
+  --shadow-blur: 15px;
 
--webkit-box-shadow: 0px calc(-1*var(--shadow-blur)) var(--shadow-blur) calc(-1*var(--shadow-blur)) var(--landingpage-shadow); 
-box-shadow: 0px calc(-1*var(--shadow-blur)) var(--shadow-blur) calc(-1*var(--shadow-blur)) var(--landingpage-shadow);
+  -webkit-box-shadow: 0px calc(-1 * var(--shadow-blur)) var(--shadow-blur)
+    calc(-1 * var(--shadow-blur)) var(--landingpage-shadow);
+  box-shadow: 0px calc(-1 * var(--shadow-blur)) var(--shadow-blur)
+    calc(-1 * var(--shadow-blur)) var(--landingpage-shadow);
 }
 
 .card-shadow-hover {
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
 }
-.card-shadow-hover:hover {
-  box-shadow: 3px 10px 15px var(--card-shadow-hover);
+@media (hover: hover) {
+  .card-shadow-hover:hover {
+    box-shadow: 3px 10px 15px var(--card-shadow-hover);
+  }
 }
