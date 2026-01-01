@@ -15,6 +15,7 @@ const FOLDERS = [
 export default function DashboardClient({ locale, messages }) {
   const [activeTab, setActiveTab] = useState('carousel'); // 'carousel' | 'gallery' | 'content' | 'colors'
   const [authed, setAuthed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Translation Helper
   const t = useMemo(() => {
@@ -87,7 +88,10 @@ export default function DashboardClient({ locale, messages }) {
 
   const NavItem = ({ tab, icon, label }) => (
     <button
-      onClick={() => setActiveTab(tab)}
+      onClick={() => {
+        setActiveTab(tab);
+        setMobileMenuOpen(false);
+      }}
       className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
         activeTab === tab
           ? 'bg-primary text-primary-foreground shadow-sm'
@@ -99,12 +103,54 @@ export default function DashboardClient({ locale, messages }) {
     </button>
   );
 
+  const bottomNavItems = [
+    { id: 'carousel', icon: 'fa-images', label: 'Carousel' },
+    { id: 'gallery', icon: 'fa-photo-video', label: 'Gallery' },
+    { id: 'content', icon: 'fa-language', label: 'Content' },
+    { id: 'colors', icon: 'fa-palette', label: 'Theme' },
+    { id: 'user-emails', icon: 'fa-envelope-open-text', label: 'User Emails' },
+    { id: 'owner-emails', icon: 'fa-inbox', label: 'Owner Emails' },
+  ];
+
   return (
     <div className="flex h-screen bg-background overflow-hidden relative">
       <StarBackground className="-z-10 opacity-50" />
 
-      {/* Sidebar */}
-      <aside className="w-64 bg-background/60 backdrop-blur-xl border-r border-border flex flex-col z-10">
+      {/* Mobile Header */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-md border-b border-border z-30 flex items-center justify-center px-4">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
+            S
+          </div>
+          <h1 className="text-lg font-bold tracking-tight">Star Admin</h1>
+        </div>
+      </header>
+
+      {/* Mobile Bottom Nav */}
+      <div className="lg:hidden fixed -bottom-1 left-0 right-0 bg-background/90 backdrop-blur-xl border-t border-border z-40 flex justify-around items-center h-16 px-1 pb-safe">
+        {bottomNavItems.map(item => (
+          <button
+            key={item.id}
+            onClick={() => {
+              setActiveTab(item.id);
+              setMobileMenuOpen(false);
+            }}
+            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${
+              activeTab === item.id
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <i className={`fas ${item.icon} text-lg`}></i>
+            <span className="text-[9px] font-medium text-center leading-tight px-0.5">
+              {item.label}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Sidebar (Desktop Only) */}
+      <aside className="hidden lg:flex flex-col w-64 bg-background/60 backdrop-blur-xl border-r border-border z-50">
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
@@ -124,7 +170,6 @@ export default function DashboardClient({ locale, messages }) {
               <NavItem tab="gallery" icon="fa-photo-video" label="Gallery" />
             </div>
           </div>
-
           <div>
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-4">
               Text Editing
@@ -146,7 +191,6 @@ export default function DashboardClient({ locale, messages }) {
               <NavItem tab="colors" icon="fa-palette" label="Theme Editor" />
             </div>
           </div>
-
           <div>
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-4">
               Automated Emails
@@ -155,12 +199,12 @@ export default function DashboardClient({ locale, messages }) {
               <NavItem
                 tab="user-emails"
                 icon="fa-envelope-open-text"
-                label="Confirmation User Emails"
+                label="User Emails"
               />
               <NavItem
                 tab="owner-emails"
                 icon="fa-inbox"
-                label="Store Inquiry Emails"
+                label="Owner Emails"
               />
             </div>
           </div>
@@ -180,7 +224,7 @@ export default function DashboardClient({ locale, messages }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto p-8 relative z-10">
+      <main className="flex-1 overflow-auto p-4 pt-8 pb-24 lg:p-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           {activeTab === 'carousel' && (
             <MediaManager
@@ -289,13 +333,13 @@ function MediaManager({ folderKey, title, showDescriptions = true }) {
       <div className="space-y-6 fade-in-up">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-6">
           <div>
-            <h2 className="text-3xl font-bold mb-2">{title}</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">{title}</h2>
+            <p className="text-muted-foreground text-sm md:text-base">
               Manage files for {title.toLowerCase()}.
             </p>
           </div>
-          <div className="flex gap-2">
-            <label className="btn btn-outline cursor-pointer">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <label className="btn btn-outline cursor-pointer w-full sm:w-auto justify-center">
               <i className="fas fa-cloud-upload-alt mr-2"></i> Upload New
               <input
                 type="file"
@@ -306,7 +350,10 @@ function MediaManager({ folderKey, title, showDescriptions = true }) {
               />
             </label>
             {showDescriptions && (
-              <button className="btn btn-primary" onClick={onSaveDescriptions}>
+              <button
+                className="btn btn-primary w-full sm:w-auto justify-center"
+                onClick={onSaveDescriptions}
+              >
                 <i className="fas fa-save mr-2"></i> Save Descriptions
               </button>
             )}
@@ -768,12 +815,12 @@ function ColorEditor() {
     <div className="space-y-6 fade-in-up">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border pb-6">
         <div>
-          <h2 className="text-3xl font-bold mb-2">Theme Editor</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">Theme Editor</h2>
+          <p className="text-muted-foreground text-sm md:text-base">
             Customize global styles for Light and Dark modes.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="bg-muted p-1 rounded-lg flex text-sm font-medium">
             <button
               className={`px-3 py-1.5 rounded-md transition-all ${
@@ -1062,7 +1109,7 @@ function EmailSettings({ type }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold">{title}</h2>
           <p className="text-muted-foreground">{description}</p>
@@ -1070,17 +1117,17 @@ function EmailSettings({ type }) {
         <button
           onClick={save}
           disabled={saving}
-          className="btn btn-primary px-6 py-2"
+          className="btn btn-primary px-6 py-2 w-full md:w-auto"
         >
           {saving ? 'Saving...' : 'Save Changes'}
         </button>
       </div>
 
       {/* Status Card - Subtle Design */}
-      <div className="bg-card border border-border rounded-xl p-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="bg-card border border-border rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-4 w-full sm:w-auto">
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center text-lg shrink-0 ${
               isEnabled
                 ? 'bg-green-500/10 text-green-600 dark:text-green-400'
                 : 'bg-red-500/10 text-red-600 dark:text-red-400'

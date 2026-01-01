@@ -15,7 +15,7 @@ export default function Footer({ messages, locale }) {
     key;
 
   return (
-    <footer className="bg-neutral-900 text-neutral-300 pt-16 pb-8 mt-auto relative z-9999">
+    <footer className="bg-neutral-900 text-neutral-300 pt-16 pb-8 mt-auto relative z-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Section */}
