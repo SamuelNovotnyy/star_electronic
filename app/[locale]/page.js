@@ -32,7 +32,7 @@ export default async function HomePage({ params }) {
       </div>
 
       {/* --- MOBILE HERO (Premium App Design) --- */}
-      <div className="lg:hidden relative h-[calc(100vh-60px)] w-full overflow-hidden bg-background">
+      <div className="lg:hidden relative w-full overflow-hidden bg-background">
         {/* Featured Carousel Card */}
         <div className="relative z-10 px-4 mt-4">
           <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
