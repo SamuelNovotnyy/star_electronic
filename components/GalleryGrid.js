@@ -32,11 +32,11 @@ export default function GalleryGrid({ folder }) {
 
   return (
     <>
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      <div className="flex flex-col gap-8 lg:block lg:columns-3 lg:gap-4 lg:space-y-4 pb-24 lg:pb-0">
         {items.map(it => (
           <div
             key={it.id}
-            className="group relative break-inside-avoid rounded-xl overflow-hidden shadow-lg lg:hover:shadow-2xl transition-all duration-300 cursor-pointer"
+            className="group relative break-inside-avoid rounded-3xl lg:rounded-xl overflow-hidden shadow-2xl lg:shadow-lg lg:hover:shadow-2xl transition-all duration-300 cursor-pointer"
             onClick={() => setSelectedImage(it)}
           >
             <img
@@ -45,6 +45,20 @@ export default function GalleryGrid({ folder }) {
               loading="lazy"
               className="w-full h-auto object-cover transform lg:group-hover:scale-105 transition-transform duration-500"
             />
+            
+            {/* Mobile: Bold Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent lg:hidden flex flex-col justify-end p-6">
+              <div className="transform translate-y-0 transition-transform">
+                <p className="text-white font-bold text-xl tracking-tight mb-1 drop-shadow-md">
+                  {it.description || 'Untitled'}
+                </p>
+                <div className="h-1 w-12 bg-primary rounded-full mb-2"></div>
+                <p className="text-white/70 text-xs uppercase tracking-widest font-medium">
+                  View Fullscreen
+                </p>
+              </div>
+            </div>
+
             {/* Hover Overlay with Search Icon - Desktop Only */}
             <div className="absolute inset-0 bg-black/40 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center hidden lg:flex">
               <div className="bg-black/50 text-white rounded-full p-3 backdrop-blur-sm transform scale-90 group-hover:scale-100 transition-transform">
@@ -52,11 +66,7 @@ export default function GalleryGrid({ folder }) {
               </div>
             </div>
 
-            {/* Description at bottom on hover (desktop) or always visible if preferred, 
-                but user asked for lightbox description. Let's keep a subtle overlay description too 
-                or just keep it clean like before. User said: "be able to spotlight or lightbox any individual picture and it's description" 
-                The previous grid design had description overlay. Let's keep it but simplified.
-            */}
+            {/* Description at bottom on hover (desktop) */}
             {it.description && (
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 hidden lg:block">
                 <p className="text-white text-sm font-medium line-clamp-2">

@@ -47,8 +47,8 @@ export default function ContactForm({ messages }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-      {/* Contact Info Section */}
-      <div className="space-y-8">
+      {/* Contact Info Section - Desktop Only */}
+      <div className="space-y-8 hidden lg:block">
         <div>
           <h3 className="text-2xl font-bold mb-4">
             {t('contact.getInTouch', 'Get in Touch')}
@@ -100,85 +100,121 @@ export default function ContactForm({ messages }) {
         </div>
       </div>
 
+      {/* Mobile Header - Bold */}
+      <div className="lg:hidden mb-8">
+        {/* Mobile Contact Info - Detailed List */}
+        <div className="flex flex-col gap-4 mb-8">
+          <a href="tel:+15551234567" className="flex items-center gap-4 bg-muted/30 p-4 rounded-2xl active:bg-primary/10 transition-colors">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl shrink-0">
+              <i className="fas fa-phone"></i>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Call Us</span>
+              <span className="text-lg font-bold text-foreground">+1 (555) 123-4567</span>
+            </div>
+          </a>
+          
+          <a href="mailto:info@star-electronic.example" className="flex items-center gap-4 bg-muted/30 p-4 rounded-2xl active:bg-primary/10 transition-colors">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl shrink-0">
+              <i className="fas fa-envelope"></i>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Email Us</span>
+              <span className="text-lg font-bold text-foreground break-all">info@star-electronic.example</span>
+            </div>
+          </a>
+
+          <div className="flex items-center gap-4 bg-muted/30 p-4 rounded-2xl">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl shrink-0">
+              <i className="fas fa-map-marker-alt"></i>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Visit Us</span>
+              <span className="text-base font-bold text-foreground leading-tight">123 Star Street, Tech City, TC 90210</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Form Section */}
-      <div className="card bg-card p-8 shadow-lg">
+      <div className="card bg-transparent lg:bg-card p-0 lg:p-8 shadow-none lg:shadow-lg">
         <form ref={formRef} onSubmit={onSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="label">{t('contact.name', 'Name')}</label>
+              <label className="label hidden lg:block">{t('contact.name', 'Name')}</label>
               <input
                 name="name"
-                className="input w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+                className="input w-full h-14 lg:h-10 text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 px-6 lg:px-4"
                 required
-                placeholder={t('contact.placeholders.name', 'John Doe')}
+                placeholder={t('contact.placeholders.name', 'Name')}
               />
             </div>
             <div className="space-y-2">
-              <label className="label">{t('contact.company', 'Company')}</label>
+              <label className="label hidden lg:block">{t('contact.company', 'Company')}</label>
               <input
                 name="company"
-                className="input w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                placeholder={t('contact.placeholders.company', 'Star Inc.')}
+                className="input w-full h-14 lg:h-10 text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 px-6 lg:px-4"
+                placeholder={t('contact.placeholders.company', 'Company (Optional)')}
               />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="label">{t('contact.email', 'Email')}</label>
+              <label className="label hidden lg:block">{t('contact.email', 'Email')}</label>
               <input
                 type="email"
                 name="email"
-                className="input w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+                className="input w-full h-14 lg:h-10 text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 px-6 lg:px-4"
                 required
                 placeholder={t(
                   'contact.placeholders.email',
-                  'john@example.com'
+                  'Email Address'
                 )}
               />
             </div>
             <div className="space-y-2">
-              <label className="label">{t('contact.phone', 'Phone')}</label>
+              <label className="label hidden lg:block">{t('contact.phone', 'Phone')}</label>
               <input
                 type="tel"
                 name="phone"
-                className="input w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+                className="input w-full h-14 lg:h-10 text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 px-6 lg:px-4"
                 placeholder={t(
                   'contact.placeholders.phone',
-                  '+1 (555) 000-0000'
+                  'Phone Number'
                 )}
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="label">{t('contact.subject', 'Subject')}</label>
+            <label className="label hidden lg:block">{t('contact.subject', 'Subject')}</label>
             <input
               name="subject"
-              className="input w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20"
+              className="input w-full h-14 lg:h-10 text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 px-6 lg:px-4"
               required
               placeholder={t(
                 'contact.placeholders.subject',
-                'How can we help?'
+                'Subject'
               )}
             />
           </div>
 
           <div className="space-y-2">
-            <label className="label">{t('contact.message', 'Message')}</label>
+            <label className="label hidden lg:block">{t('contact.message', 'Message')}</label>
             <textarea
               name="message"
-              className="textarea w-full transition-all duration-300 focus:ring-2 focus:ring-primary/20 min-h-[150px]"
+              className="textarea w-full text-lg lg:text-sm bg-muted/30 lg:bg-background border-2 lg:border border-transparent lg:border-border focus:border-primary rounded-2xl lg:rounded-lg transition-all duration-300 focus:ring-0 lg:focus:ring-2 focus:ring-primary/20 min-h-[150px] p-6 lg:p-4"
               required
               placeholder={t(
                 'contact.placeholders.message',
-                'Tell us about your project...'
+                'How can we help you?'
               )}
             />
           </div>
 
           <button
-            className="btn btn-primary w-full py-3 text-lg font-medium shadow-md lg:hover:shadow-lg transform lg:hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98]"
+            className="btn btn-primary w-full py-4 lg:py-3 text-xl lg:text-lg font-bold lg:font-medium shadow-lg lg:shadow-md lg:hover:shadow-lg transform lg:hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98] rounded-2xl lg:rounded-lg"
             disabled={loading}
           >
             {loading

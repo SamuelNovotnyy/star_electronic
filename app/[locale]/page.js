@@ -31,34 +31,74 @@ export default async function HomePage({ params }) {
         </div>
       </div>
 
-      <div className="lg:fixed top-0 left-0 w-full lg:h-screen z-0 overflow-hidden relative h-auto">
-        <div className="hidden lg:block container mx-auto px-4 py-10 absolute inset-0 z-0">
+      {/* --- MOBILE HERO (Bold & Progressive) --- */}
+      <div className="lg:hidden relative h-[calc(100vh-60px)] w-full overflow-hidden flex flex-col justify-end pb-32">
+        {/* Background Carousel */}
+        <div className="absolute inset-0 z-0">
+          <div className="w-full h-full opacity-60">
+            <Carousel folder="star_electronic_carousel" />
+          </div>
+          {/* Darker gradient for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent z-10" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-20 px-6">
+          <h1 className="relative z-10 flex flex-col font-black tracking-tighter leading-[0.85] select-none drop-shadow-2xl">
+            <span className="text-[5rem] uppercase text-primary" style={{ textShadow: '0 0 30px rgba(var(--primary-rgb), 0.5)' }}>Star</span>
+            <span className="text-[3.5rem] text-foreground uppercase tracking-tighter">Electronic</span>
+          </h1>
+          
+          <p className="relative z-10 mt-6 text-lg font-medium text-muted-foreground max-w-[90%] leading-tight drop-shadow-md">
+            {t('hero.subtitle')}
+          </p>
+
+          <div className="relative z-10 mt-8 flex gap-4">
+            <Link
+              href={`/${locale}/contact`}
+              className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-2xl text-center shadow-lg shadow-primary/25 active:scale-95 transition-transform"
+            >
+              {t('hero.ctaQuote')}
+            </Link>
+            <Link
+              href={`/${locale}/gallery`}
+              className="flex-1 flex justify-center items-center bg-card/50 backdrop-blur-md border border-white/10 text-foreground font-bold py-4 rounded-2xl text-center active:scale-95 transition-transform"
+            >
+              {t('hero.ctaGallery')}
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* --- DESKTOP HERO (Original) --- */}
+      <div className="hidden lg:block fixed top-0 left-0 w-full h-screen z-0 overflow-hidden">
+        <div className="container mx-auto px-4 py-10 absolute inset-0 z-0">
           <StarBackground className="-z-10" />
         </div>
 
         {/* Hero Section */}
-        <div className="relative h-full flex flex-col justify-start pt-0 pb-10 lg:pt-44 lg:pl-18 lg:pb-0 lg:px-0">
-          <div className="container mx-auto relative z-10 flex flex-col lg:grid lg:grid-cols-[auto_1fr] items-center gap-6 lg:gap-0">
-            {/* Carousel - Mobile: Top & Full Width, Desktop: Right & Styled */}
-            <div className="order-1 lg:order-2 relative w-[calc(100%+2rem)] -ml-4 lg:w-[600px] lg:ml-0 lg:translate-x-14">
-              <div className="relative w-full aspect-[4/3] lg:rounded-3xl overflow-hidden lg:border-2 lg:border-border lg:shadow-2xl lg:transform lg:rotate-2 lg:hover:rotate-0 transition-transform duration-500">
+        <div className="relative h-full flex flex-col justify-start pt-44 pl-18">
+          <div className="container mx-auto relative z-10 grid grid-cols-[auto_1fr] items-center">
+            {/* Carousel */}
+            <div className="order-2 relative w-[600px] translate-x-14">
+              <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden border-2 border-border shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
                 <Carousel folder="star_electronic_carousel" />
               </div>
             </div>
 
-            <div className="order-2 lg:order-1 text-center lg:text-left w-full lg:min-w-[550px] px-4 lg:px-0">
-              <h1 className="text-4xl lg:text-6xl font-extrabold tracking-tight mb-6">
-                <p className="block lg:pl-14 skew-hero overflow-wrap">
+            <div className="order-1 text-left min-w-[550px]">
+              <h1 className="text-6xl font-extrabold tracking-tight mb-6">
+                <p className="block pl-14 skew-hero overflow-wrap">
                   {spanify(t('hero.title'))}
                 </p>
-                <span className="block text-primary mt-2 lg:pl-2 whitespace-pre-wrap skew-description">
+                <span className="block text-primary mt-2 pl-2 whitespace-pre-wrap skew-description">
                   {spanify(t('hero.title2'))}
                 </span>
               </h1>
-              <p className="text-lg lg:text-xl text-muted-foreground mb-10 lg:mb-20 max-w-2xl mx-auto lg:mx-0 leading-relaxed skew-description lg:pl-12 whitespace-pre-wrap">
+              <p className="text-xl text-muted-foreground mb-20 max-w-2xl leading-relaxed skew-description pl-12 whitespace-pre-wrap">
                 {spanify(t('hero.subtitle'))}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start lg:pl-32">
+              <div className="flex gap-4 justify-start pl-32">
                 <Link
                   href={`/${locale}/contact`}
                   className="btn btn-primary text-lg px-8 py-4 text-center"
@@ -83,58 +123,76 @@ export default async function HomePage({ params }) {
         aria-hidden="true"
       ></div>
 
-      {/* Features Section */}
-      <section className="relative min-h-[565px] z-10 bg-background py-[85px] top-shadow-middle">
-        {' '}
-        {/* Added bg-background and z-10 and shadow */}
+      {/* Features Section - Mobile: Horizontal Scroll Snap, Desktop: Grid */}
+      <section className="relative z-10 bg-background py-12 lg:py-[85px] lg:top-shadow-middle">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+          <div className="text-left lg:text-center mb-8 lg:mb-16">
+            <h2 className="text-4xl lg:text-4xl font-black mb-2 lg:mb-4 uppercase tracking-tighter">
               {t('features.title')}
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
               {t('features.subtitle')}
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-            <div className="card p-6 lg:p-8 flex flex-row lg:flex-col items-start gap-5 lg:gap-0 lg:hover:-translate-y-2 card-shadow-hover transition-all duration-300">
-              <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl lg:text-2xl shrink-0 lg:mb-6">
+          {/* Mobile Scroll Container */}
+          <div className="lg:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4 scrollbar-hide">
+            {[
+              { icon: 'fa-shield-alt', title: 'features.security.title', desc: 'features.security.desc' },
+              { icon: 'fa-bolt', title: 'features.performance.title', desc: 'features.performance.desc' },
+              { icon: 'fa-headset', title: 'features.support.title', desc: 'features.support.desc' }
+            ].map((feature, i) => (
+              <div key={i} className="snap-center shrink-0 w-[85vw] bg-card border border-border rounded-3xl p-8 shadow-lg flex flex-col justify-between min-h-[250px]">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-3xl mb-6">
+                  <i className={`fas ${feature.icon}`}></i>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">{t(feature.title)}</h3>
+                  <p className="text-muted-foreground">{t(feature.desc)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+            <div className="card p-8 flex flex-col items-start gap-0 hover:-translate-y-2 card-shadow-hover transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl shrink-0 mb-6">
                 <i className="fas fa-shield-alt"></i>
               </div>
               <div>
-                <h3 className="text-lg lg:text-xl font-bold mb-1 lg:mb-3">
+                <h3 className="text-xl font-bold mb-3">
                   {t('features.security.title')}
                 </h3>
-                <p className="text-sm lg:text-base text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   {t('features.security.desc')}
                 </p>
               </div>
             </div>
 
-            <div className="card p-6 lg:p-8 flex flex-row lg:flex-col items-start gap-5 lg:gap-0 lg:hover:-translate-y-2 card-shadow-hover transition-all duration-300">
-              <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl lg:text-2xl shrink-0 lg:mb-6">
+            <div className="card p-8 flex flex-col items-start gap-0 hover:-translate-y-2 card-shadow-hover transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl shrink-0 mb-6">
                 <i className="fas fa-bolt"></i>
               </div>
               <div>
-                <h3 className="text-lg lg:text-xl font-bold mb-1 lg:mb-3">
+                <h3 className="text-xl font-bold mb-3">
                   {t('features.performance.title')}
                 </h3>
-                <p className="text-sm lg:text-base text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   {t('features.performance.desc')}
                 </p>
               </div>
             </div>
 
-            <div className="card p-6 lg:p-8 flex flex-row lg:flex-col items-start gap-5 lg:gap-0 lg:hover:-translate-y-2 card-shadow-hover transition-all duration-300">
-              <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl lg:text-2xl shrink-0 lg:mb-6">
+            <div className="card p-8 flex flex-col items-start gap-0 hover:-translate-y-2 card-shadow-hover transition-all duration-300">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-2xl shrink-0 mb-6">
                 <i className="fas fa-headset"></i>
               </div>
               <div>
-                <h3 className="text-lg lg:text-xl font-bold mb-1 lg:mb-3">
+                <h3 className="text-xl font-bold mb-3">
                   {t('features.support.title')}
                 </h3>
-                <p className="text-sm lg:text-base text-muted-foreground">
+                <p className="text-base text-muted-foreground">
                   {t('features.support.desc')}
                 </p>
               </div>
