@@ -41,7 +41,7 @@ export default function Navbar({ messages, locale }) {
   return (
     <>
       {/* Mobile navbar */}
-      <header className="lg:hidden z-50 sticky top-0">
+      <header className="lg:hidden z-[110] sticky top-0">
         <div
           className="flex items-center justify-between p-3 border-b-2 bg-background"
           style={{ borderColor: 'var(--primary-color)' }}
@@ -209,7 +209,7 @@ export default function Navbar({ messages, locale }) {
       </header>
 
       {/* PC navbar */}
-      <header className="sticky hidden lg:block top-0 z-40 bg-background">
+      <header className="sticky hidden lg:block top-0 z-[110] bg-background">
         <nav className="container mx-auto flex items-center justify-between px-4 py-3 border-b-2 nav">
           <Link
             href={base}
@@ -431,7 +431,7 @@ function LangSwitcher({ currentLocale, pathname, mobile }) {
       <button
         type="button"
         className={`btn btn-ghost h-10 px-3 flex items-center gap-2 ${
-          mobile ? 'w-full justify-end' : ''
+          mobile ? 'w-full justify-center' : ''
         }`}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -448,17 +448,21 @@ function LangSwitcher({ currentLocale, pathname, mobile }) {
         >
           {hasMounted ? labels[current] : 'English'}
         </span>
-        <i
-          className={`fa-solid fa-caret-down ml-2 opacity-70 duration-300 ease-in-out ${
-            open ? '-rotate-180' : ''
-          }`}
-        ></i>
+        {!mobile && (
+          <i
+            className={`fa-solid fa-caret-down ml-2 opacity-70 duration-300 ease-in-out ${
+              open ? '-rotate-180' : ''
+            }`}
+          ></i>
+        )}
       </button>
       {open && (
         <div
           role="menu"
-          className={`absolute right-0 mt-[0.97rem] w-[143.7px] rounded-bl-lg rounded-br-lg border-[0_2px_2px_2px] border-border bg-background shadow-lg z-50 inset-shadow-sm inset-shadow-top ${
-            mobile ? 'bottom-full mb-2 top-auto' : ''
+          className={`absolute z-50 bg-background shadow-lg ${
+            mobile
+              ? 'bottom-full mb-2 left-1/2 -translate-x-1/2 w-[180px] rounded-2xl border border-border p-1'
+              : 'right-0 mt-[0.97rem] w-[143.7px] rounded-bl-lg rounded-br-lg border-[0_2px_2px_2px] border-border inset-shadow-sm inset-shadow-top'
           }`}
         >
           {locales.map(l => (
@@ -467,7 +471,7 @@ function LangSwitcher({ currentLocale, pathname, mobile }) {
               role="menuitem"
               className={`flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-[color-mix(in_srgb,var(--fg)_6%,transparent)] ${
                 l === (hasMounted ? current : 'en') ? 'text-primary' : ''
-              }`}
+              } ${mobile ? 'rounded-xl justify-center' : ''}`}
               style={{ minWidth: 0 }}
               onClick={() => {
                 setOpen(false);

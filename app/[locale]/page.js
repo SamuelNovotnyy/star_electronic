@@ -31,48 +31,69 @@ export default async function HomePage({ params }) {
         </div>
       </div>
 
-      {/* --- MOBILE HERO (Bold & Progressive) --- */}
-      <div className="lg:hidden relative h-[calc(100vh-60px)] w-full overflow-hidden flex flex-col justify-end pb-32">
-        {/* Background Carousel */}
-        <div className="absolute inset-0 z-0">
-          <div className="w-full h-full opacity-60">
+      {/* --- MOBILE HERO (Premium App Design) --- */}
+      <div className="lg:hidden relative h-[calc(100vh-60px)] w-full overflow-hidden bg-background">
+        {/* Featured Carousel Card */}
+        <div className="relative z-10 px-4 mt-4">
+          <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
             <Carousel folder="star_electronic_carousel" />
+            {/* Subtle gradient overlay at bottom for polish */}
+            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+            {/* Badge */}
+            <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+              <i className="fas fa-bolt mr-1.5"></i>
+              {t('hero.featured', 'Featured')}
+            </div>
           </div>
-          {/* Darker gradient for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent z-10" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-20 px-6">
-          <h1 className="relative z-10 flex flex-col font-black tracking-tighter leading-[0.85] select-none drop-shadow-2xl">
-            <span
-              className="text-[5rem] uppercase text-primary"
-              style={{ textShadow: '0 0 30px rgba(var(--primary-rgb), 0.5)' }}
-            >
-              Star
-            </span>
-            <span className="text-[3.5rem] text-foreground uppercase tracking-tighter">
-              Electronic
-            </span>
-          </h1>
-
-          <p className="relative z-10 mt-6 text-lg font-medium text-muted-foreground max-w-[90%] leading-tight drop-shadow-md">
+        {/* Content Section */}
+        <div className="relative z-20 px-6 mt-6 flex-1 flex flex-col">
+          <h2 className="text-2xl font-bold text-foreground leading-tight mb-3">
+            {t('hero.title', 'Professional Solutions')}
+          </h2>
+          <p className="text-base text-muted-foreground leading-relaxed mb-6 line-clamp-3">
             {t('hero.subtitle')}
           </p>
 
-          <div className="relative z-10 mt-8 flex gap-4">
+          {/* CTA Buttons */}
+          <div className="flex gap-3">
             <Link
               href={`/${locale}/contact`}
-              className="flex-1 bg-primary text-primary-foreground font-bold py-4 rounded-2xl text-center shadow-lg shadow-primary/25 active:scale-95 transition-transform"
+              className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform"
             >
-              {t('hero.ctaQuote')}
+              <i className=" fas fa-file-contract text-[2.5rem] text-white opacity-20 absolute"></i>
+              <span className='z-10'>{t('hero.ctaQuote')}</span>
             </Link>
             <Link
               href={`/${locale}/gallery`}
-              className="flex-1 flex justify-center items-center bg-card/50 backdrop-blur-md border border-white/10 text-foreground font-bold py-4 rounded-2xl text-center active:scale-95 transition-transform"
+              className="flex-1 flex items-center justify-center gap-2 bg-muted/20 border border-border text-foreground font-semibold py-3.5 rounded-2xl active:scale-[0.98] transition-transform"
             >
-              {t('hero.ctaGallery')}
+              <i className="-z-10 fas fa-images text-[2.5rem] text-foreground absolute opacity-10"></i>
+              <span>{t('hero.ctaGallery')}</span>
             </Link>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-3 gap-3 mt-6 pb-4">
+            <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
+              <div className="text-xl font-bold text-primary">15+</div>
+              <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+                {t('hero.years', 'Years')}
+              </div>
+            </div>
+            <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
+              <div className="text-xl font-bold text-primary">500+</div>
+              <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+                {t('hero.projects', 'Projects')}
+              </div>
+            </div>
+            <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
+              <div className="text-xl font-bold text-primary">24/7</div>
+              <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
+                {t('hero.support', 'Support')}
+              </div>
+            </div>
           </div>
         </div>
       </div>

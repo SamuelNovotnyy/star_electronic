@@ -30,6 +30,9 @@ export default function DashboardClient({ locale, messages }) {
       key;
   }, [messages]);
 
+  const [passwordInput, setPasswordInput] = useState('');
+  const [error, setError] = useState(false);
+
   // Auth Effect
   useEffect(() => {
     const key = window.localStorage.getItem('dashboard_key');
@@ -39,6 +42,18 @@ export default function DashboardClient({ locale, messages }) {
       });
     }
   }, []);
+
+  // Prevent scrolling when locked
+  useEffect(() => {
+    if (!authed) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [authed]);
 
   async function checkKey(k) {
     try {
@@ -53,37 +68,20 @@ export default function DashboardClient({ locale, messages }) {
     }
   }
 
-  function promptKey() {
-    const k = window.prompt(t('dashboard.enterKey') || 'Enter Key');
-    if (!k) return;
-    checkKey(k).then(valid => {
+  function handleUnlock(e) {
+    e?.preventDefault();
+    if (!passwordInput) return;
+
+    checkKey(passwordInput).then(valid => {
       if (valid) {
         setAuthed(true);
-        window.localStorage.setItem('dashboard_key', k);
+        window.localStorage.setItem('dashboard_key', passwordInput);
+        setError(false);
       } else {
-        alert('Invalid key');
+        setError(true);
+        // Shake animation or error message
       }
     });
-  }
-
-  if (!authed) {
-    return (
-      <div className="relative min-h-screen flex items-center justify-center p-4">
-        <StarBackground />
-        <div className="max-w-md w-full bg-background/80 backdrop-blur-xl border border-border p-8 rounded-3xl shadow-2xl text-center relative z-10">
-          <h1 className="text-3xl font-bold mb-2">Dashboard Access</h1>
-          <p className="text-muted-foreground mb-8">
-            Please enter your authorized key to continue.
-          </p>
-          <button
-            className="btn btn-primary w-full py-4 text-lg"
-            onClick={promptKey}
-          >
-            Enter Key
-          </button>
-        </div>
-      </div>
-    );
   }
 
   const NavItem = ({ tab, icon, label }) => (
@@ -115,6 +113,75 @@ export default function DashboardClient({ locale, messages }) {
   return (
     <div className="flex h-screen bg-background overflow-hidden relative">
       <StarBackground className="-z-10 opacity-50" />
+
+      {/* Locked State Overlay & Modal */}
+      {!authed && (
+        <>
+          {/* Backdrop - Desaturates and blocks interaction */}
+          <div className="fixed inset-0 z-[60] bg-background/50 backdrop-grayscale backdrop-blur-[1px]" />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+              <div className="p-8 flex flex-col items-center text-center bg-background">
+                <div className="size-4 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 text-primary">
+                  <i className="fas fa-lock text-2xl"></i>
+                </div>
+
+                <h2 className="text-2xl font-bold text-foreground mb-2">
+                  Dashboard Locked
+                </h2>
+                <p className="text-muted-foreground mb-8">
+                  Please enter your access key to manage the website content.
+                </p>
+
+                <form onSubmit={handleUnlock} className="w-full space-y-4">
+                  <div className="relative">
+                    <input
+                      type="password"
+                      value={passwordInput}
+                      onChange={e => {
+                        setPasswordInput(e.target.value);
+                        setError(false);
+                      }}
+                      placeholder="Enter access key..."
+                      className={`w-full px-4 py-3 rounded-xl bg-muted/50 border ${
+                        error
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-border focus:ring-primary'
+                      } focus:outline-none focus:ring-2 transition-all`}
+                      autoFocus
+                    />
+                    {error && (
+                      <div className="absolute right-3 top-3 text-red-500 animate-in fade-in">
+                        <i className="fas fa-exclamation-circle"></i>
+                      </div>
+                    )}
+                  </div>
+
+                  {error && (
+                    <p className="text-xs text-red-500 text-left pl-1">
+                      Invalid access key. Please try again.
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
+                  >
+                    Unlock Dashboard
+                  </button>
+                </form>
+              </div>
+              <div className="bg-background p-4 text-center border-t border-border">
+                <p className="text-xs text-muted-foreground">
+                  Protected Area &bull; Authorized Personnel Only
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-md border-b border-border z-30 flex items-center justify-center px-4">
@@ -224,7 +291,11 @@ export default function DashboardClient({ locale, messages }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto p-4 pt-8 pb-24 lg:p-8 relative z-10">
+      <main
+        className={`flex-1 p-4 pt-8 pb-24 lg:p-8 relative z-10 ${
+          !authed ? 'overflow-hidden' : 'overflow-auto'
+        }`}
+      >
         <div className="max-w-6xl mx-auto">
           {activeTab === 'carousel' && (
             <MediaManager

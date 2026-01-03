@@ -78,10 +78,10 @@ export default function ThemeToggle({ mobile }) {
       {open && (
         <div
           role="menu"
-          className={`absolute right-0 w-30 rounded-bl-lg rounded-br-lg border-[0_2px_2px_2px] border-border bg-background shadow-lg z-50 inset-shadow-top ${
+          className={`absolute z-50 bg-background shadow-lg ${
             mobile
-              ? 'bottom-full mb-2 top-auto rounded-lg border'
-              : 'mt-[0.97rem]'
+              ? 'bottom-full mb-2 left-1/2 -translate-x-1/2 w-[140px] rounded-2xl border border-border p-1'
+              : 'right-0 mt-[0.97rem] w-30 rounded-bl-lg rounded-br-lg border-[0_2px_2px_2px] border-border inset-shadow-top'
           }`}
         >
           {opts.map(o => (
@@ -90,7 +90,7 @@ export default function ThemeToggle({ mobile }) {
               role="menuitem"
               className={`flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-[color-mix(in_srgb,var(--fg)_6%,transparent)] ${
                 mode === o.key ? 'text-primary' : ''
-              }`}
+              } ${mobile ? 'rounded-xl justify-center' : ''}`}
               onClick={() => setTheme(o.key)}
             >
               <i
