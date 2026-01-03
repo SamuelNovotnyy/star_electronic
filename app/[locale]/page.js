@@ -45,10 +45,17 @@ export default async function HomePage({ params }) {
         {/* Content */}
         <div className="relative z-20 px-6">
           <h1 className="relative z-10 flex flex-col font-black tracking-tighter leading-[0.85] select-none drop-shadow-2xl">
-            <span className="text-[5rem] uppercase text-primary" style={{ textShadow: '0 0 30px rgba(var(--primary-rgb), 0.5)' }}>Star</span>
-            <span className="text-[3.5rem] text-foreground uppercase tracking-tighter">Electronic</span>
+            <span
+              className="text-[5rem] uppercase text-primary"
+              style={{ textShadow: '0 0 30px rgba(var(--primary-rgb), 0.5)' }}
+            >
+              Star
+            </span>
+            <span className="text-[3.5rem] text-foreground uppercase tracking-tighter">
+              Electronic
+            </span>
           </h1>
-          
+
           <p className="relative z-10 mt-6 text-lg font-medium text-muted-foreground max-w-[90%] leading-tight drop-shadow-md">
             {t('hero.subtitle')}
           </p>
@@ -138,16 +145,33 @@ export default async function HomePage({ params }) {
           {/* Mobile Scroll Container */}
           <div className="lg:hidden flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4 scrollbar-hide">
             {[
-              { icon: 'fa-shield-alt', title: 'features.security.title', desc: 'features.security.desc' },
-              { icon: 'fa-bolt', title: 'features.performance.title', desc: 'features.performance.desc' },
-              { icon: 'fa-headset', title: 'features.support.title', desc: 'features.support.desc' }
+              {
+                icon: 'fa-shield-alt',
+                title: 'features.security.title',
+                desc: 'features.security.desc',
+              },
+              {
+                icon: 'fa-bolt',
+                title: 'features.performance.title',
+                desc: 'features.performance.desc',
+              },
+              {
+                icon: 'fa-headset',
+                title: 'features.support.title',
+                desc: 'features.support.desc',
+              },
             ].map((feature, i) => (
-              <div key={i} className="snap-center shrink-0 w-[85vw] bg-card border border-border rounded-3xl p-8 shadow-lg flex flex-col justify-between min-h-[250px]">
+              <div
+                key={i}
+                className="snap-center shrink-0 w-[85vw] bg-card border border-border rounded-3xl p-8 shadow-lg flex flex-col justify-between min-h-[250px]"
+              >
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-3xl mb-6">
                   <i className={`fas ${feature.icon}`}></i>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold mb-2">{t(feature.title)}</h3>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {t(feature.title)}
+                  </h3>
                   <p className="text-muted-foreground">{t(feature.desc)}</p>
                 </div>
               </div>

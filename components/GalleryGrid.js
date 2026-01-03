@@ -45,7 +45,7 @@ export default function GalleryGrid({ folder }) {
               loading="lazy"
               className="w-full h-auto object-cover transform lg:group-hover:scale-105 transition-transform duration-500"
             />
-            
+
             {/* Mobile: Bold Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent lg:hidden flex flex-col justify-end p-6">
               <div className="transform translate-y-0 transition-transform">
