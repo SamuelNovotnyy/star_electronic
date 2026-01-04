@@ -1,8 +1,8 @@
 /** @format */
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 export default function Carousel({ folder }) {
   const [items, setItems] = useState([]);
@@ -348,10 +348,12 @@ export default function Carousel({ folder }) {
           {/* left */}
           <div className="w-1/3 h-full flex-shrink-0 relative">
             {left ? (
-              <img
+              <Image
                 src={left.url}
-                alt={left.name}
-                className={`w-full h-full object-cover`}
+                alt={left.name || 'Carousel Image'}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className={`object-cover`}
                 onDragStart={e => e.preventDefault()}
               />
             ) : (
@@ -362,11 +364,14 @@ export default function Carousel({ folder }) {
           {/* center */}
           <div className="w-1/3 h-full flex-shrink-0 relative">
             {center ? (
-              <img
+              <Image
                 src={center.url}
-                alt={center.name}
-                className={`w-full h-full object-cover`}
+                alt={center.name || 'Carousel Image'}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className={`object-cover`}
                 onDragStart={e => e.preventDefault()}
+                priority
               />
             ) : (
               <div className="skeleton h-full w-full" />
@@ -381,10 +386,12 @@ export default function Carousel({ folder }) {
           {/* right */}
           <div className="w-1/3 h-full flex-shrink-0 relative">
             {right ? (
-              <img
+              <Image
                 src={right.url}
-                alt={right.name}
-                className={`w-full h-full object-cover`}
+                alt={right.name || 'Carousel Image'}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className={`object-cover`}
                 onDragStart={e => e.preventDefault()}
               />
             ) : (

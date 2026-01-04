@@ -41,9 +41,9 @@ export default async function HomePage({ params }) {
 
         {/* Content Section */}
         <div className="relative z-20 px-6 mt-6 flex-1 flex flex-col">
-          <h2 className="text-2xl font-bold text-foreground leading-tight mb-3">
+          <h1 className="text-2xl font-bold text-foreground leading-tight mb-3">
             {t('hero.title', 'Professional Solutions')}
-          </h2>
+          </h1>
           <p className="text-base text-muted-foreground leading-relaxed mb-6 line-clamp-3">
             {t('hero.subtitle')}
           </p>
@@ -114,9 +114,9 @@ export default async function HomePage({ params }) {
 
             <div className="order-1 text-left min-w-[550px] ml-8">
               <h1 className="text-6xl font-extrabold tracking-tight mb-6">
-                <p className="block pl-14 skew-hero overflow-wrap">
+                <span className="block pl-14 skew-hero overflow-wrap">
                   {spanify(t('hero.title'))}
-                </p>
+                </span>
                 <span className="block text-primary mt-2 pl-2 whitespace-pre-wrap skew-description">
                   {spanify(t('hero.title2'))}
                 </span>

@@ -45,8 +45,19 @@ export default function RootLayout({ children }) {
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'Star Electronic',
+              alternateName: [
+                'Star Electric',
+                'Star Electricity',
+                'Star Electronics',
+              ],
               url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-              logo: '/favicon.ico',
+              logo: '/onebyone.png',
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'Slovakia',
+              },
+              description:
+                'Leading provider of IoT and Smart Home solutions in Slovakia.',
             }),
           }}
         />

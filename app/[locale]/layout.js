@@ -18,9 +18,9 @@ export async function generateMetadata({ params }) {
   const { locale } = await params;
   const loc = locale || defaultLocale;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const title = 'Star Electronic | IoT Solutions for Smart Homes';
+  const title = 'Star Electronic | Smart Home & IoT Solutions in Slovakia';
   const description =
-    'Star Electronic delivers reliable components and responsive service for smart homes and businesses. Explore our gallery and contact us today.';
+    'Star Electronic (Star Electric) provides top-tier IoT and Internet of Things solutions for smart homes in Slovakia. Explore our electronics and components gallery today.';
 
   // hreflang alternates
   const languages = Object.fromEntries(
@@ -33,11 +33,16 @@ export async function generateMetadata({ params }) {
     },
     description,
     keywords: [
-      'IoT',
+      'Star Electronic',
+      'Star Electric',
+      'Star Electricity',
+      'Star Electronics',
+      'Slovakia IoT',
+      'Internet of Things',
       'Smart Home',
       'Electronics',
       'Components',
-      'Star Electronic',
+      'Slovakia',
     ],
     authors: [{ name: 'Star Electronic Team' }],
     robots: {
@@ -63,9 +68,9 @@ export async function generateMetadata({ params }) {
       description,
       images: [
         {
-          url: `${siteUrl}/favicon.ico`,
-          width: 64,
-          height: 64,
+          url: `${siteUrl}/onebyone.png`,
+          width: 512,
+          height: 512,
           alt: 'Star Electronic Logo',
         },
       ],
@@ -74,7 +79,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/favicon.ico`],
+      images: [`${siteUrl}/onebyone.png`],
     },
   };
 }
