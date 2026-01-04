@@ -81,7 +81,7 @@ export async function generateMetadata({ params }) {
 
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
-  const messages = getMessages(locale);
+  const messages = await getMessages(locale);
 
   return (
     <>

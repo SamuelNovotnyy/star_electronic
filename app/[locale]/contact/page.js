@@ -1,16 +1,16 @@
 /** @format */
-import ContactForm from "../../../components/ContactForm";
-import { getMessages } from "../../../lib/i18n";
-import RedBorderBottom from "@/components/RedBorderBottom";
+import ContactForm from '../../../components/ContactForm';
+import { getMessages } from '../../../lib/i18n';
+import RedBorderBottom from '@/components/RedBorderBottom';
 
-export const metadata = { title: "Contact - Star Electronic" };
+export const metadata = { title: 'Contact - Star Electronic' };
 
 export default async function ContactPage({ params }) {
   const { locale } = await params;
-  const messages = getMessages(locale);
+  const messages = await getMessages(locale);
   const t = (key, fallback) =>
     key
-      .split(".")
+      .split('.')
       .reduce(
         (o, k) => (o && o[k] !== undefined ? o[k] : undefined),
         messages

@@ -1,11 +1,11 @@
 /** @format */
-import DashboardClient from "./page.client";
-import { getMessages } from "../../../lib/i18n";
-import RedBorderBottom from "@/components/RedBorderBottom";
+import DashboardClient from './page.client';
+import { getMessages } from '../../../lib/i18n';
+import RedBorderBottom from '@/components/RedBorderBottom';
 
 export default async function DashboardPage({ params }) {
   const { locale } = await params;
-  const messages = getMessages(locale);
+  const messages = await getMessages(locale);
   return (
     <>
       <RedBorderBottom />

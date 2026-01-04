@@ -10,7 +10,7 @@ function spanify(text) {
 
 export default async function HomePage({ params }) {
   const { locale } = await params;
-  const messages = getMessages(locale);
+  const messages = await getMessages(locale);
   const t = (key, fallback) =>
     key
       .split('.')
@@ -23,14 +23,6 @@ export default async function HomePage({ params }) {
 
   return (
     <>
-      {/* Top Star Layer - Above Navbar */}
-      <div className="fixed top-0 left-0 right-0 h-[68px] z-50 pointer-events-none overflow-hidden hidden lg:block">
-        <div className="container mx-auto px-4 py-10 relative h-full">
-          {/* Matches the positioning of the bottom star, but clipped to this container */}
-          <StarBackground className="z-50" />
-        </div>
-      </div>
-
       {/* --- MOBILE HERO (Premium App Design) --- */}
       <div className="lg:hidden relative w-full overflow-hidden bg-background">
         {/* Featured Carousel Card */}
@@ -60,36 +52,42 @@ export default async function HomePage({ params }) {
           <div className="flex gap-3">
             <Link
               href={`/${locale}/contact`}
-              className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform"
+              className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-semibold py-3.5 px-2 rounded-2xl shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform"
             >
               <i className=" fas fa-file-contract text-[2.5rem] text-white opacity-20 absolute"></i>
-              <span className='z-10'>{t('hero.ctaQuote')}</span>
+              <span className="z-10 text-center">{t('hero.ctaQuote')}</span>
             </Link>
             <Link
               href={`/${locale}/gallery`}
-              className="flex-1 flex items-center justify-center gap-2 bg-muted/20 border border-border text-foreground font-semibold py-3.5 rounded-2xl active:scale-[0.98] transition-transform"
+              className="flex-1 flex items-center justify-center gap-2 bg-muted/20 border border-border text-foreground font-semibold py-3.5 px-2 rounded-2xl active:scale-[0.98] transition-transform"
             >
               <i className="-z-10 fas fa-images text-[2.5rem] text-foreground absolute opacity-10"></i>
-              <span>{t('hero.ctaGallery')}</span>
+              <span className="text-center">{t('hero.ctaGallery')}</span>
             </Link>
           </div>
 
           {/* Quick Stats */}
           <div className="grid grid-cols-3 gap-3 mt-6 pb-4">
             <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
-              <div className="text-xl font-bold text-primary">15+</div>
+              <div className="text-xl font-bold text-primary">
+                {t('hero.statYears', '15+')}
+              </div>
               <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
                 {t('hero.years', 'Years')}
               </div>
             </div>
             <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
-              <div className="text-xl font-bold text-primary">500+</div>
+              <div className="text-xl font-bold text-primary">
+                {t('hero.statProjects', '500+')}
+              </div>
               <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
                 {t('hero.projects', 'Projects')}
               </div>
             </div>
             <div className="bg-muted/10 border border-border/50 rounded-2xl p-3 text-center">
-              <div className="text-xl font-bold text-primary">24/7</div>
+              <div className="text-xl font-bold text-primary">
+                {t('hero.statSupport', '24/7')}
+              </div>
               <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
                 {t('hero.support', 'Support')}
               </div>
@@ -105,8 +103,8 @@ export default async function HomePage({ params }) {
         </div>
 
         {/* Hero Section */}
-        <div className="relative h-full flex flex-col justify-start pt-44 pl-18">
-          <div className="container mx-auto relative z-10 grid grid-cols-[auto_1fr] items-center">
+        <div className="relative h-full flex flex-col justify-start pt-42 pl-18">
+          <div className="container mx-auto relative z-10 grid grid-cols-[max-content_1fr] items-center">
             {/* Carousel */}
             <div className="order-2 relative w-[600px] translate-x-14">
               <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden border-2 border-border shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
@@ -114,7 +112,7 @@ export default async function HomePage({ params }) {
               </div>
             </div>
 
-            <div className="order-1 text-left min-w-[550px]">
+            <div className="order-1 text-left min-w-[550px] ml-8">
               <h1 className="text-6xl font-extrabold tracking-tight mb-6">
                 <p className="block pl-14 skew-hero overflow-wrap">
                   {spanify(t('hero.title'))}
@@ -152,7 +150,7 @@ export default async function HomePage({ params }) {
       ></div>
 
       {/* Features Section - Mobile: Horizontal Scroll Snap, Desktop: Grid */}
-      <section className="relative z-10 bg-background py-12 lg:py-[85px] lg:top-shadow-middle">
+      <section className="relative z-10 bg-background py-12 lg:py-[85px] top-shadow-middle">
         <div className="container mx-auto px-4">
           <div className="text-left lg:text-center mb-8 lg:mb-16">
             <h2 className="text-4xl lg:text-4xl font-black mb-2 lg:mb-4 uppercase tracking-tighter">

@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
+import StarBackground from './StarBackground';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -209,8 +210,25 @@ export default function Navbar({ messages, locale }) {
       </header>
 
       {/* PC navbar */}
-      <header className="sticky hidden lg:block top-0 z-[110] bg-background">
-        <nav className="container mx-auto flex items-center justify-between px-4 py-3 border-b-2 nav">
+      <header
+        className={`sticky hidden lg:block top-0 z-[110] bg-background ${
+          pathname !== base ? 'border-b-2' : ''
+        }`}
+        style={pathname !== base ? { borderColor: 'var(--primary-color)' } : {}}
+      >
+        {/* Star Layer - Only on Home Page */}
+        {pathname === base && (
+          <>
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <div className="container mx-auto px-4 py-10 relative h-full">
+                <StarBackground />
+              </div>
+            </div>
+            {/* Right side border extending to screen edge */}
+            <div className="absolute bottom-0 right-0 h-[2px] bg-primary z-20 w-[90%]"></div>
+          </>
+        )}
+        <nav className="container mx-auto flex items-center justify-between px-4 py-3 relative z-10">
           <Link
             href={base}
             className="font-extrabold tracking-wide text-xl flex items-center"

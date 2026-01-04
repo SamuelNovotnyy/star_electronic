@@ -36,6 +36,11 @@
 }
 
 /* Base */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 body {
   background-color: var(--bg);
   color: var(--fg);
@@ -194,18 +199,17 @@ img {
 .star-path {
   aspect-ratio: 1.051;
   background-color: var(--primary-color);
-  clip-path: shape(
-    from 50% 0%,
-    line to 65.45% 32.92%,
-    line to 100% 38.2%,
-    line to 75% 63.82%,
-    line to 80.9% 100%,
-    line to 50% 82.92%,
-    line to 19.1% 100%,
-    line to 25% 63.82%,
-    line to 0% 38.2%,
-    line to 34.55% 32.92%,
-    line to 50% 0%
+  clip-path: polygon(
+    50% 0%,
+    65.45% 32.92%,
+    100% 38.2%,
+    75% 63.82%,
+    80.9% 100%,
+    50% 82.92%,
+    19.1% 100%,
+    25% 63.82%,
+    0% 38.2%,
+    34.55% 32.92%
   );
 }
 
