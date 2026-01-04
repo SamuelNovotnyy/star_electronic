@@ -104,7 +104,7 @@ export default async function HomePage({ params }) {
 
         {/* Hero Section */}
         <div className="relative h-full flex flex-col justify-start pt-42 pl-18">
-          <div className="container mx-auto relative z-10 grid grid-cols-[max-content_1fr] items-center">
+          <div className="container mx-auto relative z-10 grid grid-cols-[auto_1fr] items-center">
             {/* Carousel */}
             <div className="order-2 relative w-[600px] translate-x-14">
               <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden border-2 border-border shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
@@ -114,7 +114,7 @@ export default async function HomePage({ params }) {
 
             <div className="order-1 text-left min-w-[550px] ml-8">
               <h1 className="text-6xl font-extrabold tracking-tight mb-6">
-                <span className="block pl-14 skew-hero overflow-wrap">
+                <span className="block pl-16 skew-hero overflow-wrap">
                   {spanify(t('hero.title'))}
                 </span>
                 <span className="block text-primary mt-2 pl-2 whitespace-pre-wrap skew-description">
